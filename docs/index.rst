@@ -33,6 +33,7 @@ Map Apache Atlas Glossary terms to DCAT RDF (turtle):
 
     from atlasdcat import AtlasDcatMapper
     from pyapacheatlas.auth import BasicAuthentication
+    from pyapacheatlas.core.glossary import GlossaryClient
 
     atlas_auth = BasicAuthentication(username="dummy", password="dummy")
     atlas_client = GlossaryClient(
