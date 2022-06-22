@@ -1,7 +1,7 @@
 # atlasdcat
 
 ![Tests](https://github.com/Informasjonsforvaltning/atlasdcat/workflows/Tests/badge.svg)
-[![codecov](https://codecov.io/gh/Informasjonsforvaltning/atlasdcat/branch/master/graph/badge.svg)](https://codecov.io/gh/Informasjonsforvaltning/atlasdcat)
+[![codecov](https://codecov.io/gh/Informasjonsforvaltning/atlasdcat/branch/main/graph/badge.svg?token=H4pXcHr8KK)](https://codecov.io/gh/Informasjonsforvaltning/atlasdcat)
 [![PyPI](https://img.shields.io/pypi/v/atlasdcat.svg)](https://pypi.org/project/atlasdcat/)
 [![Read the Docs](https://readthedocs.org/projects/atlasdcat/badge/)](https://atlasdcat.readthedocs.io/)
 
