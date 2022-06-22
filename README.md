@@ -20,11 +20,10 @@ Specification [the Norwegian Application Profile](https://data.norge.no/specific
 ### Getting started
 
 ```Python
-from atlasdcat import AtlasDcatMapper, Attribute
-
 # Example...
 from atlasdcat import AtlasDcatMapper
 from pyapacheatlas.auth import BasicAuthentication
+from pyapacheatlas.core.glossary import GlossaryClient
 
 atlas_auth = BasicAuthentication(username="dummy", password="dummy")
 atlas_client = GlossaryClient(
