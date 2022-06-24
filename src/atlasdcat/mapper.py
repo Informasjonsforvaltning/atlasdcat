@@ -42,7 +42,7 @@ from datacatalogtordf import (
     InvalidDateError,
     InvalidDateIntervalError,
     Location,
-    PeriodOfTime,
+    PeriodOfTime, InvalidURIError,
 )
 from pyapacheatlas.core.glossary import GlossaryClient
 
@@ -357,9 +357,10 @@ class AtlasDcatMapper:
         dataset.keyword = self._map_keywords(
             self._get_attribute_values(term, TermType.DATASET, Attribute.KEYWORD, True)
         )
-        dataset.spatial = _map_location(
+        location = _map_location(
             self._get_attribute_values(term, TermType.DATASET, Attribute.SPATIAL, True)
         )
+        dataset.spatial = [location]
         dataset.spatial_resolution_in_meters = self._get_first_attribute_value(
             term, TermType.DATASET, Attribute.SPATIAL_RESOLUTION_IN_METERS
         )
@@ -375,9 +376,7 @@ class AtlasDcatMapper:
             )
             dataset.temporal = [temporal]
         except (InvalidDateError, InvalidDateIntervalError) as error:
-            print("Unable to map temporal period of time.")
-            print(error)
-            dataset.temporal = []
+            print(f"Mapping temporal failed: {error}")
 
         dataset.temporal_resolution = self._get_first_attribute_value(
             term, TermType.DATASET, Attribute.TEMPORAL_RESOLUTION
@@ -428,9 +427,13 @@ class AtlasDcatMapper:
             )
         }
         distribution.description = {self._language: term.get("longDescription")}
-        distribution.formats = self._get_attribute_values(
-            term, TermType.DISTRIBUTION, Attribute.FORMAT
-        )
+        try:
+            distribution.formats = self._get_attribute_values(
+                term, TermType.DISTRIBUTION, Attribute.FORMAT
+            )
+        except InvalidURIError as error:
+            print(f"Mapping format failed: {error}")
+
         distribution.access_URL = self._get_first_attribute_value(
             term, TermType.DISTRIBUTION, Attribute.ACCESS_URL, True
         )
