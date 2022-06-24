@@ -5,7 +5,7 @@ from typing import Any
 from pyapacheatlas.auth import BasicAuthentication
 from pyapacheatlas.core.glossary import GlossaryClient
 
-from atlasdcat import AtlasDcatMapper, Attribute
+from src.atlasdcat import AtlasDcatMapper, Attribute
 
 
 def test_attribute_mapping() -> None:
