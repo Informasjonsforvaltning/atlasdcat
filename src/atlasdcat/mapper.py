@@ -123,8 +123,8 @@ def _get_term_attributes(term: Dict) -> Optional[Any]:
     )
 
 
-def _map_location(locations: list) -> Location:
-    """Map list of locations as single Location RDF resource.
+def _map_location(locations: list[str]) -> list[Location]:
+    """Map list of location of strings as list of Location RDF resource.
 
     Args:
         locations: List of locations
@@ -132,9 +132,9 @@ def _map_location(locations: list) -> Location:
     Returns:
         Location
     """
-    if len(locations) >= 1:
-        return Location(locations[0])
-    return Location()
+    if len(locations) > 0:
+        return list(map(lambda loc: Location(loc), locations))
+    return []
 
 
 def _map_period_of_time(start: str, end: str) -> PeriodOfTime:
@@ -147,11 +147,12 @@ def _map_period_of_time(start: str, end: str) -> PeriodOfTime:
     Returns:
         Period of time
     """
-    period = PeriodOfTime()
-    period.start_date = start
-    period.end_date = end
-
-    return period
+    if len(start) > 0:
+        period = PeriodOfTime()
+        period.start_date = start
+        period.end_date = end
+        return period
+    return None
 
 
 class AtlasDcatMapper:
@@ -302,8 +303,8 @@ class AtlasDcatMapper:
             An keywords RDF literal
         """
         if len(keywords) > 0:
-            keywords = []
-        return {self._language: ",".join(keywords)}
+            return {self._language: ",".join(keywords)}
+        return None
 
     def _map_contact(self, name: str, email: str) -> Contact:
         """Maps name and email to contact RDF resource.
@@ -315,10 +316,12 @@ class AtlasDcatMapper:
         Returns:
             Contact
         """
-        contact = Contact()
-        contact.name = {self._language: name}
-        contact.email = email
-        return contact
+        if len(name) > 0 or len(email) > 0:
+            contact = Contact()
+            contact.name = {self._language: name}
+            contact.email = email
+            return contact
+        return None
 
     def _map_term_to_dataset(
         self, term: Dict, distribution_terms: List[Dict]
@@ -357,12 +360,11 @@ class AtlasDcatMapper:
         dataset.keyword = self._map_keywords(
             self._get_attribute_values(term, TermType.DATASET, Attribute.KEYWORD, True)
         )
-        location = _map_location(
+        dataset.spatial = _map_location(
             self._get_attribute_values(term, TermType.DATASET, Attribute.SPATIAL, True)
         )
-        dataset.spatial = [location]
-        dataset.spatial_resolution_in_meters = self._get_first_attribute_value(
-            term, TermType.DATASET, Attribute.SPATIAL_RESOLUTION_IN_METERS
+        dataset.spatial_resolution_in_meters = self._get_attribute_values(
+            term, TermType.DATASET, Attribute.SPATIAL_RESOLUTION_IN_METERS, True
         )
 
         try:
@@ -374,14 +376,15 @@ class AtlasDcatMapper:
                     term, TermType.DATASET, Attribute.TEMPORAL_END_DATE
                 ),
             )
-            dataset.temporal = [temporal]
+            if temporal is not None:
+                dataset.temporal = [temporal]
         except (InvalidDateError, InvalidDateIntervalError) as error:
             print(f"Mapping temporal failed: {error}")
 
-        dataset.temporal_resolution = self._get_first_attribute_value(
-            term, TermType.DATASET, Attribute.TEMPORAL_RESOLUTION
+        dataset.temporal_resolution = self._get_attribute_values(
+            term, TermType.DATASET, Attribute.TEMPORAL_RESOLUTION, True
         )
-        dataset.contactpoint = self._map_contact(
+        contact_point = self._map_contact(
             self._get_first_attribute_value(
                 term, TermType.DATASET, Attribute.CONTACT_NAME
             ),
@@ -389,6 +392,8 @@ class AtlasDcatMapper:
                 term, TermType.DATASET, Attribute.CONTACT_EMAIL
             ),
         )
+        if contact_point is not None:
+            dataset.contactpoint = contact_point
         dataset.license = self._get_first_attribute_value(
             term, TermType.DATASET, Attribute.LICENSE, True
         )
@@ -429,7 +434,7 @@ class AtlasDcatMapper:
         distribution.description = {self._language: term.get("longDescription")}
         try:
             distribution.formats = self._get_attribute_values(
-                term, TermType.DISTRIBUTION, Attribute.FORMAT
+                term, TermType.DISTRIBUTION, Attribute.FORMAT, True
             )
         except InvalidURIError as error:
             print(f"Mapping format failed: {error}")

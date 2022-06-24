@@ -198,7 +198,7 @@ def test_map_glossary_to_dcat_dataset_catalog(responses: Any) -> None:
     assert dataset_to_check.contactpoint.name == {"nb": "Contact X"}
     assert dataset_to_check.contactpoint.email == "myemail@email.com"
     assert (
-        dataset_to_check.spatial.identifier
+        dataset_to_check.spatial[0].identifier
         == "https://data.geonorge.no/administrativeEnheter/nasjon/id/173163"
     )
     assert dataset_to_check.access_rights == "PUBLIC"
@@ -212,3 +212,6 @@ def test_map_glossary_to_dcat_dataset_catalog(responses: Any) -> None:
     assert len(dataset_to_check.distributions) > 0
     first_distribution = dataset_to_check.distributions[0]
     assert first_distribution.title == {"nb": "CSV-fil om offentlig anskaffelser"}
+
+    rdf = catalog.to_rdf()
+    assert len(rdf) > 0

@@ -502,7 +502,7 @@
                     "Emneord": "Anskaffelser",
                     "Tittel": "Utslippsintensiteter",
                     "TidsmessigAvgrensetFra": 0,
-                    "GeografiskAvgrensning": null,
+                    "GeografiskAvgrensning": "https://data.geonorge.no/administrativeEnheter/nasjon/id/173163 | Norge",
                     "Type": "DATA | Datasett",
                     "Tilgangsnivå": "PUBLIC | Allmenn tilgang",
                     "PubliseresPåFellesDatakatalog": "Ja",
