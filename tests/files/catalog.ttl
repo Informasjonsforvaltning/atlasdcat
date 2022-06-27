@@ -1,0 +1,68 @@
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix ns1: <http://www.w3.org/2006/vcard/ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://data.norge.no/catalog/1> a dcat:Catalog ;
+    dct:language <file:///home/stigbd/src/informasjonsforvaltning/atlasdcat/nb> ;
+    dct:publisher <https://organization-catalogue.fellesdatakatalog.digdir.no/organizations/123456789> ;
+    dct:title "Catalog"@nb ;
+    dcat:dataset <http://data.norge.no/datasets/0ae16586-ddbd-463a-bac3-ecc57f33e4d3>,
+        <http://data.norge.no/datasets/b87714c2-31a7-4249-8b94-fa5990eae45c>,
+        <http://data.norge.no/datasets/c52f7edf-98b3-404b-a4d2-e2677fb0572d> .
+
+<http://data.norge.no/datasets/0ae16586-ddbd-463a-bac3-ecc57f33e4d3> a dcat:Dataset ;
+    dct:accessRights <file:///home/stigbd/src/informasjonsforvaltning/atlasdcat/PUBLIC> ;
+    dct:accrualPeriodicity <file:///home/stigbd/src/informasjonsforvaltning/atlasdcat/MONTHLY> ;
+    dct:description "Doffin er den nasjonale kunngjøringsdatabasen for offentlige anskaffelser Doffin hjelpe oppdragsgivere med å lage og publisere kunngjøringer i samsvar med regelverket, og gjøre det enkelt for leverandører å finne relevante konkurranser i offentlig sektor."@nb ;
+    dct:publisher <file:///home/stigbd/src/informasjonsforvaltning/atlasdcat/986252932> ;
+    dct:spatial <https://data.geonorge.no/administrativeEnheter/nasjon/id/173163> ;
+    dct:title "Kunngjøringer av offentlig anskaffelser"@nb ;
+    dcat:contactPoint [ a ns1:Organization ;
+            ns1:hasEmail <mailto:myemail@email.com> ;
+            ns1:hasOrganizationName "Contact X"@nb ] ;
+    dcat:distribution <http://data.norge.no/distributions/c5105ba7-6ac0-4246-9a55-29a46bf15ae7> ;
+    dcat:keyword "Anskaffelser,Innkjøp,Doffin"@nb ;
+    dcat:theme <http://publications.europa.eu/resource/authority/data-theme/GOVE>,
+        <https://psi.norge.no/los/ord/offentlig-innkjop> .
+
+<http://data.norge.no/datasets/b87714c2-31a7-4249-8b94-fa5990eae45c> a dcat:Dataset ;
+    dct:accessRights <file:///home/stigbd/src/informasjonsforvaltning/atlasdcat/PUBLIC> ;
+    dct:accrualPeriodicity <file:///home/stigbd/src/informasjonsforvaltning/atlasdcat/IRREG> ;
+    dct:description "Formålet med CPV er å standardisere betegnelsene som oppdragsgiverne bruker til å beskrive gjenstanden i kontrakter. Ved å gruppere anskaffelser etter ulike CPV numre, blir det enklere for leverandørene å søke etter relevante kunngjøringer i databasene. Et sentralt hensyn bak systemet er at en tilbyder med et helt annet morsmål skal kunne skjønne hva oppdragsgiveren er ute etter."@nb ;
+    dct:publisher <file:///home/stigbd/src/informasjonsforvaltning/atlasdcat/986252932> ;
+    dct:temporal [ a dct:PeriodOfTime ;
+            dcat:endDate "2022-10-10"^^xsd:date ;
+            dcat:startDate "2020-10-10"^^xsd:date ] ;
+    dct:title "CPV-koder"@nb ;
+    dcat:contactPoint [ a ns1:Organization ;
+            ns1:hasEmail <mailto:myemail@email.com> ;
+            ns1:hasOrganizationName "Contact X"@nb ] ;
+    dcat:theme <http://publications.europa.eu/resource/authority/data-theme/GOVE>,
+        <https://psi.norge.no/los/ord/offentlig-innkjop> .
+
+<http://data.norge.no/datasets/c52f7edf-98b3-404b-a4d2-e2677fb0572d> a dcat:Dataset ;
+    dct:accessRights <file:///home/stigbd/src/informasjonsforvaltning/atlasdcat/PUBLIC> ;
+    dct:accrualPeriodicity <file:///home/stigbd/src/informasjonsforvaltning/atlasdcat/IRREG> ;
+    dct:description "Dataene består av utslipp (CO2-ekvivalenter) per krone fordelt på innkjøpsrelevante artskontoer i henhold til statsregnskapet. Dataene gir utslippsintensiteter fordelt på scope 1, 2 og 3, samt innland og utland."@nb ;
+    dct:publisher <file:///home/stigbd/src/informasjonsforvaltning/atlasdcat/986252932> ;
+    dct:spatial <https://data.geonorge.no/administrativeEnheter/nasjon/id/173163> ;
+    dct:temporal [ a dct:PeriodOfTime ;
+            dcat:endDate "2022-10-10"^^xsd:date ;
+            dcat:startDate "2020-10-10"^^xsd:date ] ;
+    dct:title "Utslippsintensiteter"@nb ;
+    dcat:contactPoint [ a ns1:Organization ;
+            ns1:hasEmail <mailto:jonas.karstensen@dfo.no> ;
+            ns1:hasOrganizationName "Jonas Karstensen"@nb ] ;
+    dcat:keyword "Anskaffelser"@nb ;
+    dcat:theme <https://psi.norge.no/los/ord/natur-klima-og-miljo> .
+
+<http://data.norge.no/distributions/c5105ba7-6ac0-4246-9a55-29a46bf15ae7> a dcat:Distribution ;
+    dct:description "CSV-fil med kunngjøringer om offentlige anskaffelser."@nb ;
+    dct:format <http://publications.europa.eu/resource/authority/file-type/CSV> ;
+    dct:license <http://publications.europa.eu/resource/authority/licence/NLOD_2_0> ;
+    dct:title "CSV-fil om offentlig anskaffelser"@nb ;
+    dcat:accessURL <https://anskaffelser.no> ;
+    dcat:downloadURL <https://anskaffelser.no> .
+
+<https://data.geonorge.no/administrativeEnheter/nasjon/id/173163> a dct:Location .

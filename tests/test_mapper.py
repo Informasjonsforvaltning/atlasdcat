@@ -4,8 +4,13 @@ from typing import Any
 
 from pyapacheatlas.auth import BasicAuthentication
 from pyapacheatlas.core.glossary import GlossaryClient
+import pytest
+from rdflib import Graph
+from rdflib.compare import graph_diff, isomorphic
+from rdflib.namespace import Namespace
 
-from src.atlasdcat import AtlasDcatMapper, Attribute
+
+from atlasdcat import AtlasDcatMapper, Attribute, FormatError, TemporalError
 
 
 def test_attribute_mapping() -> None:
@@ -213,5 +218,188 @@ def test_map_glossary_to_dcat_dataset_catalog(responses: Any) -> None:
     first_distribution = dataset_to_check.distributions[0]
     assert first_distribution.title == {"nb": "CSV-fil om offentlig anskaffelser"}
 
-    rdf = catalog.to_rdf()
-    assert len(rdf) > 0
+    g1 = Graph().parse(data=catalog.to_rdf(), format="turtle")
+    _dump_turtle(g1)
+    g2 = Graph().parse("tests/files/catalog.ttl", format="turtle")
+
+    _isomorphic = isomorphic(g1, g2)
+    if not _isomorphic:
+        _dump_diff(g1, g2)
+        pass
+    assert _isomorphic
+
+
+def test_map_glossary_to_dcat_dataset_catalog_contact_details_missing(
+    responses: Any,
+) -> None:
+    """It returns a RDF dataset catalog with no contact_point."""
+    with open("tests/files/mock_glossary_contact_details_missing.json", "r") as file:
+        glossary_detailed = json.loads(file.read())
+    responses.add(
+        method=responses.GET,
+        url="http://atlas/glossary/myglossary/detailed",
+        json=glossary_detailed,
+    )
+
+    atlas_auth = BasicAuthentication(username="", password="")  # noqa: S106
+    atlas_client = GlossaryClient(
+        endpoint_url="http://atlas", authentication=atlas_auth
+    )
+
+    mapper = AtlasDcatMapper(
+        glossary_client=atlas_client,
+        glossary_id="myglossary",
+        catalog_uri="https://data.norge.no/catalog/1",
+        catalog_title="Catalog",
+        catalog_publisher="https://organization-catalogue.fellesdatakatalog.digdir.no/organizations/123456789",
+        dataset_uri_template="http://data.norge.no/datasets/{guid}",
+        distribution_uri_template="http://data.norge.no/distributions/{guid}",
+        language="nb",
+        attr_mapping={
+            Attribute.ACCESS_RIGHTS: "Tilgangsnivå",
+            Attribute.ACCESS_URL: "TilgangsUrl",
+            Attribute.CONTACT_EMAIL: "DataeierEpost",
+            Attribute.CONTACT_NAME: "Dataeier",
+            Attribute.DATASET: "Datasett",
+            Attribute.DISTRIBUTION: "Distribusjon",
+            Attribute.DOWNLOAD_URL: "Nedlastningslenke",
+            Attribute.FORMAT: "Format",
+            Attribute.FREQUENCY: "Oppdateringsfrekvens",
+            Attribute.INCLUDE_IN_DCAT: "PubliseresPåFellesDatakatalog",
+            Attribute.KEYWORD: "Emneord",
+            Attribute.LICENSE: "Lisens",
+            Attribute.PUBLISHER: "Utgiver",
+            Attribute.SPATIAL: "GeografiskAvgrensning",
+            Attribute.THEME: "Tema",
+            Attribute.TITLE: "Tittel",
+        },
+    )
+
+    catalog = mapper.map_glossary_to_dcat_dataset_catalog()
+
+    g1 = Graph().parse(data=catalog.to_rdf(), format="turtle")
+    _dump_turtle(g1)
+
+    DCAT = Namespace("http://www.w3.org/ns/dcat#")
+
+    assert (None, DCAT.contactPoint, None) not in g1
+
+
+def test_map_glossary_to_dcat_dataset_catalog_invalid_dates(
+    responses: Any,
+) -> None:
+    """Should raise temporal error."""
+    with open("tests/files/mock_glossary_invalid_date.json", "r") as file:
+        glossary_detailed = json.loads(file.read())
+    responses.add(
+        method=responses.GET,
+        url="http://atlas/glossary/myglossary/detailed",
+        json=glossary_detailed,
+    )
+
+    atlas_auth = BasicAuthentication(username="", password="")  # noqa: S106
+    atlas_client = GlossaryClient(
+        endpoint_url="http://atlas", authentication=atlas_auth
+    )
+
+    mapper = AtlasDcatMapper(
+        glossary_client=atlas_client,
+        glossary_id="myglossary",
+        catalog_uri="https://data.norge.no/catalog/1",
+        catalog_title="Catalog",
+        catalog_publisher="https://organization-catalogue.fellesdatakatalog.digdir.no/organizations/123456789",
+        dataset_uri_template="http://data.norge.no/datasets/{guid}",
+        distribution_uri_template="http://data.norge.no/distributions/{guid}",
+        language="nb",
+        attr_mapping={
+            Attribute.ACCESS_RIGHTS: "Tilgangsnivå",
+            Attribute.ACCESS_URL: "TilgangsUrl",
+            Attribute.CONTACT_EMAIL: "DataeierEpost",
+            Attribute.CONTACT_NAME: "Dataeier",
+            Attribute.DATASET: "Datasett",
+            Attribute.DISTRIBUTION: "Distribusjon",
+            Attribute.DOWNLOAD_URL: "Nedlastningslenke",
+            Attribute.FORMAT: "Format",
+            Attribute.FREQUENCY: "Oppdateringsfrekvens",
+            Attribute.INCLUDE_IN_DCAT: "PubliseresPåFellesDatakatalog",
+            Attribute.KEYWORD: "Emneord",
+            Attribute.LICENSE: "Lisens",
+            Attribute.PUBLISHER: "Utgiver",
+            Attribute.SPATIAL: "GeografiskAvgrensning",
+            Attribute.THEME: "Tema",
+            Attribute.TITLE: "Tittel",
+        },
+    )
+
+    with pytest.raises(TemporalError):
+        mapper.map_glossary_to_dcat_dataset_catalog()
+
+
+def test_map_glossary_to_dcat_dataset_catalog_invalid_format(
+    responses: Any,
+) -> None:
+    """Should raise format error."""
+    with open("tests/files/mock_glossary_detailed_invalid_format.json", "r") as file:
+        glossary_detailed = json.loads(file.read())
+    responses.add(
+        method=responses.GET,
+        url="http://atlas/glossary/myglossary/detailed",
+        json=glossary_detailed,
+    )
+
+    atlas_auth = BasicAuthentication(username="", password="")  # noqa: S106
+    atlas_client = GlossaryClient(
+        endpoint_url="http://atlas", authentication=atlas_auth
+    )
+
+    mapper = AtlasDcatMapper(
+        glossary_client=atlas_client,
+        glossary_id="myglossary",
+        catalog_uri="https://data.norge.no/catalog/1",
+        catalog_title="Catalog",
+        catalog_publisher="https://organization-catalogue.fellesdatakatalog.digdir.no/organizations/123456789",
+        dataset_uri_template="http://data.norge.no/datasets/{guid}",
+        distribution_uri_template="http://data.norge.no/distributions/{guid}",
+        language="nb",
+        attr_mapping={
+            Attribute.ACCESS_RIGHTS: "Tilgangsnivå",
+            Attribute.ACCESS_URL: "TilgangsUrl",
+            Attribute.CONTACT_EMAIL: "DataeierEpost",
+            Attribute.CONTACT_NAME: "Dataeier",
+            Attribute.DATASET: "Datasett",
+            Attribute.DISTRIBUTION: "Distribusjon",
+            Attribute.DOWNLOAD_URL: "Nedlastningslenke",
+            Attribute.FORMAT: "Format",
+            Attribute.FREQUENCY: "Oppdateringsfrekvens",
+            Attribute.INCLUDE_IN_DCAT: "PubliseresPåFellesDatakatalog",
+            Attribute.KEYWORD: "Emneord",
+            Attribute.LICENSE: "Lisens",
+            Attribute.PUBLISHER: "Utgiver",
+            Attribute.SPATIAL: "GeografiskAvgrensning",
+            Attribute.THEME: "Tema",
+            Attribute.TITLE: "Tittel",
+        },
+    )
+
+    with pytest.raises(FormatError):
+        mapper.map_glossary_to_dcat_dataset_catalog()
+
+
+# ---------------------------------------------------------------------- #
+# Utils for displaying debug information
+
+
+def _dump_diff(g1: Graph, g2: Graph) -> None:
+    in_both, in_first, in_second = graph_diff(g1, g2)
+    print("\nin both:")
+    _dump_turtle(in_both)
+    print("\nin first:")
+    _dump_turtle(in_first)
+    print("\nin second:")
+    _dump_turtle(in_second)
+
+
+def _dump_turtle(g: Graph) -> None:
+    for _l in g.serialize(format="turtle").splitlines():
+        if _l:
+            print(_l)

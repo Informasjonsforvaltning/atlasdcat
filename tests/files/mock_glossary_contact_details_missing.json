@@ -1,0 +1,80 @@
+{
+    "guid": "ef38fdb9-bbd5-4c5e-92fd-30bebc07a3f1",
+    "qualifiedName": "Glossary",
+    "name": "Glossary",
+    "terms": [
+        {
+            "termGuid": "0ae16586-ddbd-463a-bac3-ecc57f33e4d3",
+            "relationGuid": "b690ea08-c6fe-417b-8861-e7894e5a3b24",
+            "displayText": "kunngjoringer"
+        }
+    ],
+    "termInfo": {
+        "0ae16586-ddbd-463a-bac3-ecc57f33e4d3": {
+            "guid": "0ae16586-ddbd-463a-bac3-ecc57f33e4d3",
+            "qualifiedName": "kunngjoringer@Glossary",
+            "name": "kunngjoringer",
+            "longDescription": "Doffin er den nasjonale kunngjøringsdatabasen for offentlige anskaffelser Doffin hjelpe oppdragsgivere med å lage og publisere kunngjøringer i samsvar med regelverket, og gjøre det enkelt for leverandører å finne relevante konkurranser i offentlig sektor.",
+            "lastModifiedTS": "14",
+            "createdBy": "d4c8d5ed-4f9a-42c3-b232-a2134696618c",
+            "updatedBy": "d4c8d5ed-4f9a-42c3-b232-a2134696618c",
+            "createTime": 1644927580177,
+            "updateTime": 1645524544164,
+            "status": "Approved",
+            "anchor": {
+                "glossaryGuid": "ef38fdb9-bbd5-4c5e-92fd-30bebc07a3f1",
+                "relationGuid": "b690ea08-c6fe-417b-8861-e7894e5a3b24"
+            },
+            "seeAlso": [
+                {
+                    "termGuid": "c5105ba7-6ac0-4246-9a55-29a46bf15ae7",
+                    "relationGuid": "cf309777-719c-48d7-bb16-be0050c9931a",
+                    "displayText": "kunngjoringer-csv"
+                },
+                {
+                    "termGuid": "b87714c2-31a7-4249-8b94-fa5990eae45c",
+                    "relationGuid": "1350b843-f63c-4fc8-82f2-af0c5d27d39a",
+                    "displayText": "cpv"
+                },
+                {
+                    "termGuid": "9009e3c9-a96c-47d1-8f89-143f456a01ba",
+                    "relationGuid": "de820e1c-a212-4c1d-a51f-ddf9ede7173a",
+                    "displayText": "lokasjonskoder"
+                },
+                {
+                    "termGuid": "045ac00a-f59c-4734-8962-d90421ce38bb",
+                    "relationGuid": "f0a6d019-fdf1-4f15-af35-45e9684ba5a3",
+                    "displayText": "kunngjoringer-informasjonsmodell"
+                },
+                {
+                    "termGuid": "311a049a-5166-485e-b823-a5ff65f5a3c2",
+                    "relationGuid": "7ad76c97-5d6d-4753-9ecf-d80a2f317e12",
+                    "displayText": "konkurransegrunnlag"
+                }
+            ],
+            "attributes": {
+                "Datasett": {
+                    "TidsmessigAvgrensetTil": 0,
+                    "Tema": "https://psi.norge.no/los/ord/offentlig-innkjop | Offentlige innkjøp; http://publications.europa.eu/resource/authority/data-theme/GOVE | Forvaltning og offentlig sektor",
+                    "Utgiver": "986252932 | Direktoratet for forvaltning og økonomistyring",
+                    "Dokumentasjon": null,
+                    "Geografisk avgrensning": null,
+                    "Emneord": "Anskaffelser; Innkjøp; Doffin",
+                    "Tittel": "Kunngjøringer av offentlig anskaffelser",
+                    "TidsmessigAvgrensetFra": 1640991600000,
+                    "GeografiskAvgrensning": "https://data.geonorge.no/administrativeEnheter/nasjon/id/173163 | Norge",
+                    "Type": "DATA | Datasett",
+                    "Tilgangsnivå": "PUBLIC | Allmenn tilgang",
+                    "PubliseresPåFellesDatakatalog": "Ja",
+                    "Tidsmessig avgrenset fra": 0,
+                    "Oppdateringsfrekvens": "MONTHLY | Månedlig",
+                    "Tidsmessig avgrenset til": 0
+                }
+            },
+            "glossaryTermHeader": {
+                "termGuid": "0ae16586-ddbd-463a-bac3-ecc57f33e4d3",
+                "qualifiedName": "kunngjoringer@Glossary"
+            }
+        }
+    }
+}
