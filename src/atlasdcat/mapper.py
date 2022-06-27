@@ -490,7 +490,9 @@ class AtlasDcatMapper:
         catalog.identifier = self._catalog_uri
         catalog.title = {self._language: self._catalog_title}
         catalog.publisher = self._catalog_publisher
-        catalog.language = [self._language]
+        catalog.language = [
+            f"http://publications.europa.eu/resource/authority/language/{self._language.upper()}"
+        ]
         catalog.license = ""
 
         # Fetch detailed glossary

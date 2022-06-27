@@ -612,7 +612,7 @@
             "attributes": {
                 "Distribusjon": {
                     "TilgangsUrl": "https://anskaffelser.no",
-                    "Utgiver": "https://organization-catalogue.fellesdatakatalog.digdir.no/organizations/986252932 | Direktoratet for forvaltning og økonomistyring",
+                    "Utgiver": "https://organization-catalog.fellesdatakatalog.digdir.no/organizations/986252932 | Direktoratet for forvaltning og økonomistyring",
                     "Tilgangs-URL": null,
                     "Format": "http://invalid.format.url^/resource/authority/file-type/CSV | CSV",
                     "Lisens": "http://publications.europa.eu/resource/authority/licence/NLOD_2_0 | Norsk lisens for offentlige data (NLOD)",

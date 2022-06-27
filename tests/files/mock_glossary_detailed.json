@@ -101,7 +101,7 @@
                 "Datasett": {
                     "TidsmessigAvgrensetTil": 0,
                     "Tema": "https://psi.norge.no/los/ord/offentlig-innkjop | Offentlige innkjøp;http://publications.europa.eu/resource/authority/data-theme/GOVE | Forvaltning og offentlig sektor",
-                    "Utgiver": "986252932 | Direktoratet for forvaltning og økonomistyring",
+                    "Utgiver": "https://organization-catalog.fellesdatakatalog.digdir.no/organizations/986252932 | Direktoratet for forvaltning og økonomistyring",
                     "Dokumentasjon": "https://simap.ted.europa.eu/web/simap/cpv",
                     "DataeierEpost": "myemail@email.com",
                     "Geografisk avgrensning": null,
@@ -110,10 +110,10 @@
                     "TidsmessigAvgrensetFra": 0,
                     "GeografiskAvgrensning": "",
                     "Type": "CODE_LIST | Kodelister",
-                    "Tilgangsnivå": "PUBLIC | Allmenn tilgang",
+                    "Tilgangsnivå": "http://publications.europa.eu/resource/authority/access-right/PUBLIC | Allmenn tilgang",
                     "PubliseresPåFellesDatakatalog": "Ja",
                     "Tidsmessig avgrenset fra": 0,
-                    "Oppdateringsfrekvens": "IRREG | Uregelmessig",
+                    "Oppdateringsfrekvens": "http://publications.europa.eu/resource/authority/frequency/IRREG | Uregelmessig",
                     "Tidsmessig avgrenset til": 0,
                     "Dataeier": "Contact X",
                     "temporalStartDate": "2020-10-10",
@@ -149,7 +149,7 @@
             ],
             "attributes": {
                 "Informasjonsmodell": {
-                    "Utgiver": "971032081 | Statens vegvesen",
+                    "Utgiver": "https://organization-catalog.fellesdatakatalog.digdir.no/organizations/971032081 | Statens vegvesen",
                     "Tittel": "Kjøretøyregisteret - Informasjonsmodell"
                 }
             },
@@ -177,7 +177,7 @@
                 "Datasett": {
                     "TidsmessigAvgrensetTil": 0,
                     "Tema": "http://publications.europa.eu/resource/authority/data-theme/GOVE | Forvaltning og offentlig sektor",
-                    "Utgiver": "971526920 | Statistisk sentralbyrå",
+                    "Utgiver": "https://organization-catalog.fellesdatakatalog.digdir.no/organizations/971526920 | Statistisk sentralbyrå",
                     "Dokumentasjon": "https://data.brreg.no/enhetsregisteret/api/docs/index.html",
                     "DataeierEpost": "martin.standley@dfo.no",
                     "Geografisk avgrensning": null,
@@ -186,7 +186,7 @@
                     "TidsmessigAvgrensetFra": 0,
                     "GeografiskAvgrensning": "https://data.geonorge.no/administrativeEnheter/nasjon/id/173163 | Norge",
                     "Type": "CODE_LIST | Kodelister",
-                    "Tilgangsnivå": "PUBLIC | Allmenn tilgang",
+                    "Tilgangsnivå": "http://publications.europa.eu/resource/authority/access-right/PUBLIC | Allmenn tilgang",
                     "PubliseresPåFellesDatakatalog": "Nei",
                     "Tidsmessig avgrenset fra": 0,
                     "Oppdateringsfrekvens": null,
@@ -225,7 +225,7 @@
                 "Datasett": {
                     "TidsmessigAvgrensetTil": 0,
                     "Tema": "https://psi.norge.no/los/ord/trafikk-og-transport | Trafikk og transport;https://psi.norge.no/los/ord/natur-klima-og-miljo | Natur klima og miljø",
-                    "Utgiver": "971032081 | Statens vegvesen",
+                    "Utgiver": "https://organization-catalog.fellesdatakatalog.digdir.no/organizations/971032081 | Statens vegvesen",
                     "Dokumentasjon": null,
                     "DataeierEpost": "martin.standley@dfo.no",
                     "Geografisk avgrensning": null,
@@ -237,7 +237,7 @@
                     "Tilgangsnivå": "RESTRICTED | Betinget tilgang",
                     "PubliseresPåFellesDatakatalog": "Nei",
                     "Tidsmessig avgrenset fra": 0,
-                    "Oppdateringsfrekvens": "MONTHLY | Månedlig",
+                    "Oppdateringsfrekvens": "http://publications.europa.eu/resource/authority/frequency/MONTHLY | Månedlig",
                     "Tidsmessig avgrenset til": 0,
                     "Dataeier": "Martin de Laine Standley"
                 }
@@ -266,7 +266,7 @@
                 "Datasett": {
                     "TidsmessigAvgrensetTil": 0,
                     "Tema": "http://publications.europa.eu/resource/authority/data-theme/GOVE | Forvaltning og offentlig sektor",
-                    "Utgiver": "974760673 | Brønnøysundregisterne",
+                    "Utgiver": "https://organization-catalog.fellesdatakatalog.digdir.no/organizations/974760673 | Brønnøysundregisterne",
                     "Dokumentasjon": null,
                     "DataeierEpost": "martin.standley@dfo.no",
                     "Geografisk avgrensning": null,
@@ -275,10 +275,10 @@
                     "TidsmessigAvgrensetFra": 0,
                     "GeografiskAvgrensning": "https://data.geonorge.no/administrativeEnheter/nasjon/id/173163 | Norge",
                     "Type": "CODE_LIST | Kodelister",
-                    "Tilgangsnivå": "PUBLIC | Allmenn tilgang",
+                    "Tilgangsnivå": "http://publications.europa.eu/resource/authority/access-right/PUBLIC | Allmenn tilgang",
                     "PubliseresPåFellesDatakatalog": "Nei",
                     "Tidsmessig avgrenset fra": 0,
-                    "Oppdateringsfrekvens": "IRREG | Uregelmessig",
+                    "Oppdateringsfrekvens": "http://publications.europa.eu/resource/authority/frequency/IRREG | Uregelmessig",
                     "Tidsmessig avgrenset til": 0,
                     "Dataeier": "Martin de Laine Standley"
                 }
@@ -314,7 +314,7 @@
                 "Datasett": {
                     "TidsmessigAvgrensetTil": 0,
                     "Tema": "http://publications.europa.eu/resource/authority/data-theme/REGI | Regioner og byer;http://publications.europa.eu/resource/authority/data-theme/GOVE | Forvaltning og offentlig sektor",
-                    "Utgiver": "986252932 | Direktoratet for forvaltning og økonomistyring",
+                    "Utgiver": "https://organization-catalog.fellesdatakatalog.digdir.no/organizations/986252932 | Direktoratet for forvaltning og økonomistyring",
                     "Dokumentasjon": "https://simap.ted.europa.eu/nuts",
                     "DataeierEpost": "myemail@email.com",
                     "Geografisk avgrensning": null,
@@ -323,10 +323,10 @@
                     "TidsmessigAvgrensetFra": 0,
                     "GeografiskAvgrensning": "http://publications.europa.eu/resource/authority/country/NOR | Norge",
                     "Type": "CODE_LIST | Kodelister",
-                    "Tilgangsnivå": "PUBLIC | Allmenn tilgang",
+                    "Tilgangsnivå": "http://publications.europa.eu/resource/authority/access-right/PUBLIC | Allmenn tilgang",
                     "PubliseresPåFellesDatakatalog": "Nei",
                     "Tidsmessig avgrenset fra": 0,
-                    "Oppdateringsfrekvens": "IRREG | Uregelmessig",
+                    "Oppdateringsfrekvens": "http://publications.europa.eu/resource/authority/frequency/IRREG | Uregelmessig",
                     "Tidsmessig avgrenset til": 0,
                     "Dataeier": "Contact X"
                 }
@@ -355,7 +355,7 @@
                 "Datasett": {
                     "TidsmessigAvgrensetTil": 0,
                     "Tema": "https://psi.norge.no/los/ord/skatt-og-avgift | Skatt og avgift",
-                    "Utgiver": "986252932 | Direktoratet for forvaltning og økonomistyring",
+                    "Utgiver": "https://organization-catalog.fellesdatakatalog.digdir.no/organizations/986252932 | Direktoratet for forvaltning og økonomistyring",
                     "Dokumentasjon": null,
                     "DataeierEpost": "Erik.Auset@dfo.no",
                     "Geografisk avgrensning": null,
@@ -367,7 +367,7 @@
                     "Tilgangsnivå": "RESTRICTED | Betinget tilgang",
                     "PubliseresPåFellesDatakatalog": "Nei",
                     "Tidsmessig avgrenset fra": 0,
-                    "Oppdateringsfrekvens": "ANNUAL | Årlig",
+                    "Oppdateringsfrekvens": "http://publications.europa.eu/resource/authority/frequency/ANNUAL | Årlig",
                     "Tidsmessig avgrenset til": 0,
                     "Dataeier": "Erik Auset"
                 }
@@ -396,7 +396,7 @@
                 "Datasett": {
                     "TidsmessigAvgrensetTil": 0,
                     "Tema": "http://publications.europa.eu/resource/authority/data-theme/GOVE | Forvaltning og offentlig sektor",
-                    "Utgiver": "974760673 | Brønnøysundregisterne",
+                    "Utgiver": "https://organization-catalog.fellesdatakatalog.digdir.no/organizations/974760673 | Brønnøysundregisterne",
                     "Dokumentasjon": "https://data.brreg.no/enhetsregisteret/api/docs/index.html",
                     "DataeierEpost": "myemail@email.com",
                     "Geografisk avgrensning": null,
@@ -405,10 +405,10 @@
                     "TidsmessigAvgrensetFra": 0,
                     "GeografiskAvgrensning": "https://data.geonorge.no/administrativeEnheter/nasjon/id/173163 | Norge",
                     "Type": "DATA | Datasett",
-                    "Tilgangsnivå": "PUBLIC | Allmenn tilgang",
+                    "Tilgangsnivå": "http://publications.europa.eu/resource/authority/access-right/PUBLIC | Allmenn tilgang",
                     "PubliseresPåFellesDatakatalog": "Nei",
                     "Tidsmessig avgrenset fra": 0,
-                    "Oppdateringsfrekvens": "MONTHLY | Månedlig",
+                    "Oppdateringsfrekvens": "http://publications.europa.eu/resource/authority/frequency/MONTHLY | Månedlig",
                     "Tidsmessig avgrenset til": 0,
                     "Dataeier": "Contact X"
                 }
@@ -454,7 +454,7 @@
                 "UnknownTermType": {
                     "TidsmessigAvgrensetTil": 0,
                     "Tema": "https://psi.norge.no/los/ord/offentlig-innkjop | Offentlige innkjøp",
-                    "Utgiver": "986252932 | Direktoratet for forvaltning og økonomistyring",
+                    "Utgiver": "https://organization-catalog.fellesdatakatalog.digdir.no/organizations/986252932 | Direktoratet for forvaltning og økonomistyring",
                     "Dokumentasjon": null,
                     "DataeierEpost": "jonas.karstensen@dfo.no",
                     "Geografisk avgrensning": null,
@@ -466,7 +466,7 @@
                     "Tilgangsnivå": null,
                     "PubliseresPåFellesDatakatalog": "Nei",
                     "Tidsmessig avgrenset fra": 0,
-                    "Oppdateringsfrekvens": "DAILY | Daglig",
+                    "Oppdateringsfrekvens": "http://publications.europa.eu/resource/authority/frequency/DAILY | Daglig",
                     "Tidsmessig avgrenset til": 0,
                     "Dataeier": "Jonas Karstensen"
                 }
@@ -495,7 +495,7 @@
                 "Datasett": {
                     "TidsmessigAvgrensetTil": 0,
                     "Tema": "https://psi.norge.no/los/ord/natur-klima-og-miljo | Natur klima og miljø",
-                    "Utgiver": "986252932 | Direktoratet for forvaltning og økonomistyring",
+                    "Utgiver": "https://organization-catalog.fellesdatakatalog.digdir.no/organizations/986252932 | Direktoratet for forvaltning og økonomistyring",
                     "Dokumentasjon": null,
                     "DataeierEpost": "jonas.karstensen@dfo.no",
                     "Geografisk avgrensning": null,
@@ -504,10 +504,10 @@
                     "TidsmessigAvgrensetFra": 0,
                     "GeografiskAvgrensning": "https://data.geonorge.no/administrativeEnheter/nasjon/id/173163 | Norge",
                     "Type": "DATA | Datasett",
-                    "Tilgangsnivå": "PUBLIC | Allmenn tilgang",
+                    "Tilgangsnivå": "http://publications.europa.eu/resource/authority/access-right/PUBLIC | Allmenn tilgang",
                     "PubliseresPåFellesDatakatalog": "Ja",
                     "Tidsmessig avgrenset fra": 0,
-                    "Oppdateringsfrekvens": "IRREG | Uregelmessig",
+                    "Oppdateringsfrekvens": "http://publications.europa.eu/resource/authority/frequency/IRREG | Uregelmessig",
                     "Tidsmessig avgrenset til": 0,
                     "Dataeier": "Jonas Karstensen",
                     "temporalStartDate": "2020-10-10",
@@ -565,7 +565,7 @@
                 "Datasett": {
                     "TidsmessigAvgrensetTil": 0,
                     "Tema": "https://psi.norge.no/los/ord/offentlig-innkjop | Offentlige innkjøp; http://publications.europa.eu/resource/authority/data-theme/GOVE | Forvaltning og offentlig sektor",
-                    "Utgiver": "986252932 | Direktoratet for forvaltning og økonomistyring",
+                    "Utgiver": "https://organization-catalog.fellesdatakatalog.digdir.no/organizations/986252932 | Direktoratet for forvaltning og økonomistyring",
                     "Dokumentasjon": null,
                     "DataeierEpost": "myemail@email.com",
                     "Geografisk avgrensning": null,
@@ -574,10 +574,10 @@
                     "TidsmessigAvgrensetFra": 1640991600000,
                     "GeografiskAvgrensning": "https://data.geonorge.no/administrativeEnheter/nasjon/id/173163 | Norge",
                     "Type": "DATA | Datasett",
-                    "Tilgangsnivå": "PUBLIC | Allmenn tilgang",
+                    "Tilgangsnivå": "http://publications.europa.eu/resource/authority/access-right/PUBLIC | Allmenn tilgang",
                     "PubliseresPåFellesDatakatalog": "Ja",
                     "Tidsmessig avgrenset fra": 0,
-                    "Oppdateringsfrekvens": "MONTHLY | Månedlig",
+                    "Oppdateringsfrekvens": "http://publications.europa.eu/resource/authority/frequency/MONTHLY | Månedlig",
                     "Tidsmessig avgrenset til": 0,
                     "Dataeier": "Contact X"
                 }
@@ -612,7 +612,7 @@
             "attributes": {
                 "Distribusjon": {
                     "TilgangsUrl": "https://anskaffelser.no",
-                    "Utgiver": "https://organization-catalogue.fellesdatakatalog.digdir.no/organizations/986252932 | Direktoratet for forvaltning og økonomistyring",
+                    "Utgiver": "https://organization-catalog.fellesdatakatalog.digdir.no/organizations/986252932 | Direktoratet for forvaltning og økonomistyring",
                     "Tilgangs-URL": null,
                     "Format": "http://publications.europa.eu/resource/authority/file-type/CSV | CSV",
                     "Lisens": "http://publications.europa.eu/resource/authority/licence/NLOD_2_0 | Norsk lisens for offentlige data (NLOD)",
@@ -678,7 +678,7 @@
             ],
             "attributes": {
                 "Informasjonsmodell": {
-                    "Utgiver": "986252932 | Direktoratet for forvaltning og økonomistyring",
+                    "Utgiver": "https://organization-catalog.fellesdatakatalog.digdir.no/organizations/986252932 | Direktoratet for forvaltning og økonomistyring",
                     "Tittel": "Informasjonsmodell - Kunngjøringer"
                 }
             },

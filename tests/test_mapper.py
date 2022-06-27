@@ -25,10 +25,10 @@ def test_attribute_mapping() -> None:
         glossary_id="myglossary",
         catalog_uri="https://data.norge.no/catalog/1",
         catalog_title="Catalog",
-        catalog_publisher="https://organization-catalogue.fellesdatakatalog.digdir.no/organizations/123456789",
+        catalog_publisher="https://organization-catalog.fellesdatakatalog.digdir.no/organizations/123456789",
         dataset_uri_template="http://data.norge.no/datasets/{guid}",
         distribution_uri_template="http://data.norge.no/distributions/{guid}",
-        language="nb",
+        language="nob",
         attr_mapping={
             Attribute.ACCESS_RIGHTS: "Tilgangsnivå",
             Attribute.ACCESS_URL: "TilgangsUrl",
@@ -97,10 +97,10 @@ def test_default_attribute_mapping() -> None:
         glossary_id="myglossary",
         catalog_uri="https://data.norge.no/catalog/1",
         catalog_title="Catalog",
-        catalog_publisher="https://organization-catalogue.fellesdatakatalog.digdir.no/organizations/123456789",
+        catalog_publisher="https://organization-catalog.fellesdatakatalog.digdir.no/organizations/123456789",
         dataset_uri_template="http://data.norge.no/datasets/{guid}",
         distribution_uri_template="http://data.norge.no/distributions/{guid}",
-        language="nb",
+        language="nob",
     )
 
     assert mapper._get_attribute_name(Attribute.ACCESS_RIGHTS) == "accessRights"
@@ -153,10 +153,10 @@ def test_map_glossary_to_dcat_dataset_catalog(responses: Any) -> None:
         glossary_id="myglossary",
         catalog_uri="https://data.norge.no/catalog/1",
         catalog_title="Catalog",
-        catalog_publisher="https://organization-catalogue.fellesdatakatalog.digdir.no/organizations/123456789",
+        catalog_publisher="https://organization-catalog.fellesdatakatalog.digdir.no/organizations/123456789",
         dataset_uri_template="http://data.norge.no/datasets/{guid}",
         distribution_uri_template="http://data.norge.no/distributions/{guid}",
-        language="nb",
+        language="nob",
         attr_mapping={
             Attribute.ACCESS_RIGHTS: "Tilgangsnivå",
             Attribute.ACCESS_URL: "TilgangsUrl",
@@ -181,34 +181,45 @@ def test_map_glossary_to_dcat_dataset_catalog(responses: Any) -> None:
 
     # Catalog properties
     assert catalog.identifier == "https://data.norge.no/catalog/1"
-    assert catalog.title == {"nb": "Catalog"}
+    assert catalog.title == {"nob": "Catalog"}
     assert (
         catalog.publisher
-        == "https://organization-catalogue.fellesdatakatalog.digdir.no/organizations/123456789"
+        == "https://organization-catalog.fellesdatakatalog.digdir.no/organizations/123456789"
     )
-    assert catalog.language == ["nb"]
+    assert catalog.language == [
+        "http://publications.europa.eu/resource/authority/language/NOB"
+    ]
     assert catalog.license == ""
 
     # Datasets
     assert len(catalog.datasets) == 3
 
     dataset_to_check = catalog.datasets[2]
-    assert dataset_to_check.title == {"nb": "Kunngjøringer av offentlig anskaffelser"}
+    assert dataset_to_check.title == {"nob": "Kunngjøringer av offentlig anskaffelser"}
     assert dataset_to_check.description == {
-        "nb": "Doffin er den nasjonale kunngjøringsdatabasen for offentlige anskaffelser "
+        "nob": "Doffin er den nasjonale kunngjøringsdatabasen for offentlige anskaffelser "
         "Doffin hjelpe oppdragsgivere med å lage og publisere kunngjøringer i samsvar med "
         "regelverket, og gjøre det enkelt for leverandører å finne relevante konkurranser "
         "i offentlig sektor."
     }
-    assert dataset_to_check.contactpoint.name == {"nb": "Contact X"}
+    assert dataset_to_check.contactpoint.name == {"nob": "Contact X"}
     assert dataset_to_check.contactpoint.email == "myemail@email.com"
     assert (
         dataset_to_check.spatial[0].identifier
         == "https://data.geonorge.no/administrativeEnheter/nasjon/id/173163"
     )
-    assert dataset_to_check.access_rights == "PUBLIC"
-    assert dataset_to_check.frequency == "MONTHLY"
-    assert dataset_to_check.publisher == "986252932"
+    assert (
+        dataset_to_check.access_rights
+        == "http://publications.europa.eu/resource/authority/access-right/PUBLIC"
+    )
+    assert (
+        dataset_to_check.frequency
+        == "http://publications.europa.eu/resource/authority/frequency/MONTHLY"
+    )
+    assert (
+        dataset_to_check.publisher
+        == "https://organization-catalog.fellesdatakatalog.digdir.no/organizations/986252932"
+    )
     assert dataset_to_check.theme == [
         "https://psi.norge.no/los/ord/offentlig-innkjop",
         "http://publications.europa.eu/resource/authority/data-theme/GOVE",
@@ -216,7 +227,7 @@ def test_map_glossary_to_dcat_dataset_catalog(responses: Any) -> None:
 
     assert len(dataset_to_check.distributions) > 0
     first_distribution = dataset_to_check.distributions[0]
-    assert first_distribution.title == {"nb": "CSV-fil om offentlig anskaffelser"}
+    assert first_distribution.title == {"nob": "CSV-fil om offentlig anskaffelser"}
 
     g1 = Graph().parse(data=catalog.to_rdf(), format="turtle")
     _dump_turtle(g1)
@@ -251,10 +262,10 @@ def test_map_glossary_to_dcat_dataset_catalog_contact_details_missing(
         glossary_id="myglossary",
         catalog_uri="https://data.norge.no/catalog/1",
         catalog_title="Catalog",
-        catalog_publisher="https://organization-catalogue.fellesdatakatalog.digdir.no/organizations/123456789",
+        catalog_publisher="https://organization-catalog.fellesdatakatalog.digdir.no/organizations/123456789",
         dataset_uri_template="http://data.norge.no/datasets/{guid}",
         distribution_uri_template="http://data.norge.no/distributions/{guid}",
-        language="nb",
+        language="nob",
         attr_mapping={
             Attribute.ACCESS_RIGHTS: "Tilgangsnivå",
             Attribute.ACCESS_URL: "TilgangsUrl",
@@ -307,10 +318,10 @@ def test_map_glossary_to_dcat_dataset_catalog_invalid_dates(
         glossary_id="myglossary",
         catalog_uri="https://data.norge.no/catalog/1",
         catalog_title="Catalog",
-        catalog_publisher="https://organization-catalogue.fellesdatakatalog.digdir.no/organizations/123456789",
+        catalog_publisher="https://organization-catalog.fellesdatakatalog.digdir.no/organizations/123456789",
         dataset_uri_template="http://data.norge.no/datasets/{guid}",
         distribution_uri_template="http://data.norge.no/distributions/{guid}",
-        language="nb",
+        language="nob",
         attr_mapping={
             Attribute.ACCESS_RIGHTS: "Tilgangsnivå",
             Attribute.ACCESS_URL: "TilgangsUrl",
@@ -357,10 +368,10 @@ def test_map_glossary_to_dcat_dataset_catalog_invalid_format(
         glossary_id="myglossary",
         catalog_uri="https://data.norge.no/catalog/1",
         catalog_title="Catalog",
-        catalog_publisher="https://organization-catalogue.fellesdatakatalog.digdir.no/organizations/123456789",
+        catalog_publisher="https://organization-catalog.fellesdatakatalog.digdir.no/organizations/123456789",
         dataset_uri_template="http://data.norge.no/datasets/{guid}",
         distribution_uri_template="http://data.norge.no/distributions/{guid}",
-        language="nb",
+        language="nob",
         attr_mapping={
             Attribute.ACCESS_RIGHTS: "Tilgangsnivå",
             Attribute.ACCESS_URL: "TilgangsUrl",
