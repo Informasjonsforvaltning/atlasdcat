@@ -41,13 +41,33 @@ from datacatalogtordf import (
     Distribution,
     InvalidDateError,
     InvalidDateIntervalError,
+    InvalidURIError,
     Location,
-    PeriodOfTime, InvalidURIError,
+    PeriodOfTime,
+    URI,
 )
 from pyapacheatlas.core.glossary import GlossaryClient
 
 from .attribute import Attribute
 from .termtype import TermType
+
+
+class MappingException(Exception):
+    """Exception class for mapping errors."""
+
+    pass
+
+
+class TemporalError(MappingException):
+    """Exception class for temporal errors."""
+
+    pass
+
+
+class FormatError(MappingException):
+    """Exception class for format errors."""
+
+    pass
 
 
 def _convert_term_type_to_attribute(term_type: TermType) -> Attribute:
@@ -123,7 +143,7 @@ def _get_term_attributes(term: Dict) -> Optional[Any]:
     )
 
 
-def _map_location(locations: list[str]) -> list[Location]:
+def _map_location(locations: List[str]) -> List[Location]:
     """Map list of location of strings as list of Location RDF resource.
 
     Args:
@@ -147,12 +167,10 @@ def _map_period_of_time(start: str, end: str) -> PeriodOfTime:
     Returns:
         Period of time
     """
-    if len(start) > 0:
-        period = PeriodOfTime()
-        period.start_date = start
-        period.end_date = end
-        return period
-    return None
+    period = PeriodOfTime()
+    period.start_date = start
+    period.end_date = end
+    return period
 
 
 class AtlasDcatMapper:
@@ -293,7 +311,7 @@ class AtlasDcatMapper:
             self._get_attribute_values(term, term_type, attr, parse_value)
         )
 
-    def _map_keywords(self, keywords: List) -> dict:
+    def _map_keywords(self, keywords: List) -> Optional[Dict]:
         """Maps list of keywords to RDF literal.
 
         Args:
@@ -306,7 +324,7 @@ class AtlasDcatMapper:
             return {self._language: ",".join(keywords)}
         return None
 
-    def _map_contact(self, name: str, email: str) -> Contact:
+    def _map_contact(self, name: str, email: str) -> Optional[Contact]:
         """Maps name and email to contact RDF resource.
 
         Args:
@@ -335,6 +353,9 @@ class AtlasDcatMapper:
 
         Returns:
             A dataset RDF resource.
+
+        Raises:
+            TemporalError: If mapping to temporal fails
         """
         dataset = Dataset()
         # Map attributes
@@ -367,19 +388,18 @@ class AtlasDcatMapper:
             term, TermType.DATASET, Attribute.SPATIAL_RESOLUTION_IN_METERS, True
         )
 
-        try:
-            temporal = _map_period_of_time(
-                self._get_first_attribute_value(
-                    term, TermType.DATASET, Attribute.TEMPORAL_START_DATE
-                ),
-                self._get_first_attribute_value(
-                    term, TermType.DATASET, Attribute.TEMPORAL_END_DATE
-                ),
-            )
-            if temporal is not None:
+        start_date = self._get_first_attribute_value(
+            term, TermType.DATASET, Attribute.TEMPORAL_START_DATE
+        )
+        end_date = self._get_first_attribute_value(
+            term, TermType.DATASET, Attribute.TEMPORAL_END_DATE
+        )
+        if start_date and end_date:
+            try:
+                temporal = _map_period_of_time(start_date, end_date)
                 dataset.temporal = [temporal]
-        except (InvalidDateError, InvalidDateIntervalError) as error:
-            print(f"Mapping temporal failed: {error}")
+            except (InvalidDateError, InvalidDateIntervalError) as error:
+                raise TemporalError(error) from error
 
         dataset.temporal_resolution = self._get_attribute_values(
             term, TermType.DATASET, Attribute.TEMPORAL_RESOLUTION, True
@@ -421,6 +441,9 @@ class AtlasDcatMapper:
 
         Returns:
             A distribution RDF resource.
+
+        Raises:
+            FormatError: If mapping to format fails
         """
         distribution = Distribution()
         distribution.identifier = self._distribution_uri_template.format(
@@ -432,12 +455,15 @@ class AtlasDcatMapper:
             )
         }
         distribution.description = {self._language: term.get("longDescription")}
-        try:
-            distribution.formats = self._get_attribute_values(
-                term, TermType.DISTRIBUTION, Attribute.FORMAT, True
-            )
-        except InvalidURIError as error:
-            print(f"Mapping format failed: {error}")
+        distribution.formats = self._get_attribute_values(
+            term, TermType.DISTRIBUTION, Attribute.FORMAT, True
+        )
+        # Validate URIs:
+        for format in distribution.formats:
+            try:
+                URI(format)
+            except InvalidURIError as error:
+                raise FormatError(error) from error
 
         distribution.access_URL = self._get_first_attribute_value(
             term, TermType.DISTRIBUTION, Attribute.ACCESS_URL, True

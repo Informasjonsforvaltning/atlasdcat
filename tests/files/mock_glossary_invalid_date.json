@@ -1,0 +1,69 @@
+{
+    "guid": "ef38fdb9-bbd5-4c5e-92fd-30bebc07a3f1",
+    "qualifiedName": "Glossary",
+    "name": "Glossary",
+    "terms": [
+        {
+            "termGuid": "b87714c2-31a7-4249-8b94-fa5990eae45c",
+            "relationGuid": "6eb26e41-3cf8-4d27-9533-0e4a0eb63610",
+            "displayText": "cpv"
+        }
+    ],
+    "termInfo": {
+        "b87714c2-31a7-4249-8b94-fa5990eae45c": {
+            "guid": "b87714c2-31a7-4249-8b94-fa5990eae45c",
+            "qualifiedName": "cpv@Glossary",
+            "name": "cpv",
+            "longDescription": "Formålet med CPV er å standardisere betegnelsene som oppdragsgiverne bruker til å beskrive gjenstanden i kontrakter. Ved å gruppere anskaffelser etter ulike CPV numre, blir det enklere for leverandørene å søke etter relevante kunngjøringer i databasene. Et sentralt hensyn bak systemet er at en tilbyder med et helt annet morsmål skal kunne skjønne hva oppdragsgiveren er ute etter.",
+            "lastModifiedTS": "5",
+            "createdBy": "d4c8d5ed-4f9a-42c3-b232-a2134696618c",
+            "updatedBy": "d4c8d5ed-4f9a-42c3-b232-a2134696618c",
+            "createTime": 1645529455050,
+            "updateTime": 1645535318808,
+            "status": "Approved",
+            "anchor": {
+                "glossaryGuid": "ef38fdb9-bbd5-4c5e-92fd-30bebc07a3f1",
+                "relationGuid": "6eb26e41-3cf8-4d27-9533-0e4a0eb63610"
+            },
+            "seeAlso": [
+                {
+                    "termGuid": "311a049a-5166-485e-b823-a5ff65f5a3c2",
+                    "relationGuid": "90d66dbe-ad25-4121-bf6f-d27f029fdc32",
+                    "displayText": "konkurransegrunnlag"
+                },
+                {
+                    "termGuid": "0ae16586-ddbd-463a-bac3-ecc57f33e4d3",
+                    "relationGuid": "1350b843-f63c-4fc8-82f2-af0c5d27d39a",
+                    "displayText": "kunngjoringer"
+                }
+            ],
+            "attributes": {
+                "Datasett": {
+                    "TidsmessigAvgrensetTil": 0,
+                    "Tema": "https://psi.norge.no/los/ord/offentlig-innkjop | Offentlige innkjøp;http://publications.europa.eu/resource/authority/data-theme/GOVE | Forvaltning og offentlig sektor",
+                    "Utgiver": "986252932 | Direktoratet for forvaltning og økonomistyring",
+                    "Dokumentasjon": "https://simap.ted.europa.eu/web/simap/cpv",
+                    "DataeierEpost": "myemail@email.com",
+                    "Geografisk avgrensning": null,
+                    "Emneord": null,
+                    "Tittel": "CPV-koder",
+                    "TidsmessigAvgrensetFra": 0,
+                    "GeografiskAvgrensning": "",
+                    "Type": "CODE_LIST | Kodelister",
+                    "Tilgangsnivå": "PUBLIC | Allmenn tilgang",
+                    "PubliseresPåFellesDatakatalog": "Ja",
+                    "Tidsmessig avgrenset fra": 0,
+                    "Oppdateringsfrekvens": "IRREG | Uregelmessig",
+                    "Tidsmessig avgrenset til": 0,
+                    "Dataeier": "Contact X",
+                    "temporalStartDate": "INVALID-DA-TE",
+                    "temporalEndDate": "2022-10-10"
+                }
+            },
+            "glossaryTermHeader": {
+                "termGuid": "b87714c2-31a7-4249-8b94-fa5990eae45c",
+                "qualifiedName": "cpv@Glossary"
+            }
+        }
+    }
+}
