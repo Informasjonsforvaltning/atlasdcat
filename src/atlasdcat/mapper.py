@@ -52,19 +52,19 @@ from .attribute import Attribute
 from .termtype import TermType
 
 
-class MappingException(Exception):
+class MappingError(Exception):
     """Exception class for mapping errors."""
 
     pass
 
 
-class TemporalError(MappingException):
+class TemporalError(MappingError):
     """Exception class for temporal errors."""
 
     pass
 
 
-class FormatError(MappingException):
+class FormatError(MappingError):
     """Exception class for format errors."""
 
     pass
