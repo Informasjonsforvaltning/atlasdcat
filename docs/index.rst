@@ -5,6 +5,7 @@ Apache Atlas DCAT library
    :hidden:
    :maxdepth: 1
 
+   example
    license
    reference
 
@@ -56,3 +57,6 @@ Map Apache Atlas Glossary terms to DCAT RDF (turtle):
         print(catalog.to_rdf())
     except Exception as e:
         print(f"An exception occurred: {e}")
+
+
+For an example of usage of this library in a simple server, see :ref:`example`.

@@ -46,8 +46,9 @@ try:
     print(catalog.to_rdf())
 except Exception as e:
     print(f"An exception occurred: {e}")
-
 ```
+
+For an example of usage of this library in a simple server, see [example](./example/README.md).
 
 ## Development
 
