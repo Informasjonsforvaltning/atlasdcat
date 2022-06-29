@@ -394,7 +394,7 @@ class AtlasDcatMapper:
         end_date = self._get_first_attribute_value(
             term, TermType.DATASET, Attribute.TEMPORAL_END_DATE
         )
-        if start_date and end_date:
+        if start_date or end_date:
             try:
                 temporal = _map_period_of_time(start_date, end_date)
                 dataset.temporal = [temporal]
