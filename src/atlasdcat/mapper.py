@@ -459,6 +459,8 @@ class AtlasDcatMapper:
             term, TermType.DISTRIBUTION, Attribute.FORMAT, True
         )
         # Validate URIs:
+        # TODO: this is a temporary solution, we should use a proper validator
+        # issue created here: https://github.com/Informasjonsforvaltning/datacatalogtordf/issues/77 # noqa: B950
         for format in distribution.formats:
             try:
                 URI(format)
