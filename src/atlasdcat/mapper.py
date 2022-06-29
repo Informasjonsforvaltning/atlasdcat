@@ -18,11 +18,12 @@ Example:
     >>>     glossary_client=atlas_client,
     >>>     glossary_id="myglossary",
     >>>     catalog_uri="https://example.com/catalog",
+    >>>     catalog_language="http://publications.europa.eu/resource/authority/language/NOB",
     >>>     catalog_title="Catalog",
     >>>     catalog_publisher="https://domain/publisher",
     >>>     dataset_uri_template="http://domain/datasets/{guid}",
     >>>     distribution_uri_template="http://domain/distributions/{guid}",
-    >>>     language="en",
+    >>>     language="nb",
     >>> )
     >>>
     >>> try:
@@ -181,6 +182,7 @@ class AtlasDcatMapper:
         glossary_client: GlossaryClient,
         glossary_id: str,
         catalog_uri: str,
+        catalog_language: str,
         catalog_title: str,
         catalog_publisher: str,
         dataset_uri_template: str,
@@ -194,9 +196,10 @@ class AtlasDcatMapper:
             glossary_client (GlossaryClient): A GlossaryClient (use pyapacheatlas)
             glossary_id (str): The Atlas glossary id
             catalog_uri (str): URI of this catalog
+            catalog_language (str): Language of this catalog
             catalog_title (str): Title of this catalog
             catalog_publisher (str): Publisher of this catalog
-            language (str): Language (default 'nb')
+            language (str): Content language (default 'nb')
             dataset_uri_template (str): Template for dataset URI
             distribution_uri_template (str): Template for distribution URI
             attr_mapping (Optional[Dict]): Attribute mapping
@@ -207,6 +210,7 @@ class AtlasDcatMapper:
         self._glossary_id = glossary_id
         self._language = language
         self._catalog_uri = catalog_uri
+        self._catalog_language = catalog_language
         self._catalog_title = catalog_title
         self._catalog_publisher = catalog_publisher
         self._dataset_uri_template = dataset_uri_template
@@ -492,9 +496,7 @@ class AtlasDcatMapper:
         catalog.identifier = self._catalog_uri
         catalog.title = {self._language: self._catalog_title}
         catalog.publisher = self._catalog_publisher
-        catalog.language = [
-            f"http://publications.europa.eu/resource/authority/language/{self._language.upper()}"
-        ]
+        catalog.language = [self._catalog_language]
         catalog.license = ""
 
         # Fetch detailed glossary

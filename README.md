@@ -34,11 +34,12 @@ mapper = AtlasDcatMapper(
     glossary_client=atlas_client,
     glossary_id="myglossary",
     catalog_uri="https://domain/catalog",
+    catalog_language="http://publications.europa.eu/resource/authority/language/NOB",
     catalog_title="Catalog",
     catalog_publisher="https://domain/publisher",
     dataset_uri_template="http://domain/datasets/{guid}",
     distribution_uri_template="http://domain/distributions/{guid}",
-    language="en",
+    language="nb",
 )
 
 try:
