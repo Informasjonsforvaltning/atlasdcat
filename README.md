@@ -5,7 +5,7 @@
 [![PyPI](https://img.shields.io/pypi/v/atlasdcat.svg)](https://pypi.org/project/atlasdcat/)
 [![Read the Docs](https://readthedocs.org/projects/atlasdcat/badge/)](https://atlasdcat.readthedocs.io/)
 
-A Python library for mapping Apache Atlas Glossary terms to DCAT metadata and vice versa.
+A Python library for mapping [Apache Atlas](https://atlas.apache.org/) Glossary terms to DCAT metadata and vice versa.
 
 Specification [the Norwegian Application Profile](https://data.norge.no/specification/dcat-ap-no) of [the DCAT standard](https://www.w3.org/TR/vocab-dcat-2/).
 
