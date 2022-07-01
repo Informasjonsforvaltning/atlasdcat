@@ -9,7 +9,7 @@ Apache Atlas DCAT library
    license
    reference
 
-A Python library for mapping Apache Atlas Glossary terms to DCAT metadata and vice versa.
+A Python library for mapping `Apache Atlas <https://atlas.apache.org/>`_ Glossary terms to DCAT metadata and vice versa.
 
 Specifications `the Norwegian Application Profile <https://data.norge.no/specification/dcat-ap-no>`_ of `the DCAT standard <https://www.w3.org/TR/vocab-dcat-2/>`_.
 
