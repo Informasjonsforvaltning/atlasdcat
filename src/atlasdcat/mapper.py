@@ -45,7 +45,6 @@ from datacatalogtordf import (
     InvalidURIError,
     Location,
     PeriodOfTime,
-    URI,
 )
 from pyapacheatlas.core.glossary import GlossaryClient
 
@@ -459,17 +458,12 @@ class AtlasDcatMapper:
             )
         }
         distribution.description = {self._language: term.get("longDescription")}
-        distribution.formats = self._get_attribute_values(
-            term, TermType.DISTRIBUTION, Attribute.FORMAT, True
-        )
-        # Validate URIs:
-        # TODO: this is a temporary solution, we should use a proper validator
-        # issue created here: https://github.com/Informasjonsforvaltning/datacatalogtordf/issues/77 # noqa: B950
-        for format in distribution.formats:
-            try:
-                URI(format)
-            except InvalidURIError as error:
-                raise FormatError(error) from error
+        try:
+            distribution.formats = self._get_attribute_values(
+                term, TermType.DISTRIBUTION, Attribute.FORMAT, True
+            )
+        except InvalidURIError as error:
+            raise FormatError(error) from error
 
         distribution.access_URL = self._get_first_attribute_value(
             term, TermType.DISTRIBUTION, Attribute.ACCESS_URL, True

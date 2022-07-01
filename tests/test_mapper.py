@@ -350,7 +350,7 @@ def test_map_glossary_to_dcat_dataset_catalog_invalid_dates(
         mapper.map_glossary_to_dcat_dataset_catalog()
 
 
-def test_map_glossary_to_dcat_dataset_catalog_invalid_format(
+def test_map_glossary_to_dcat_dataset_catalog_invalid_format_URI(
     responses: Any,
 ) -> None:
     """Should raise format error."""
