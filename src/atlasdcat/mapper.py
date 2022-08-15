@@ -5,12 +5,11 @@ according to the
 `dcat-ap-no v.2 standard <https://data.norge.no/specification/dcat-ap-no>`__
 
 Example:
-    >>> from atlasdcat import AtlasDcatMapper
+    >>> from atlasdcat import AtlasDcatMapper, AtlasGlossaryClient
     >>> from pyapacheatlas.auth import BasicAuthentication
-    >>> from pyapacheatlas.core.glossary import GlossaryClient
     >>>
     >>> atlas_auth = BasicAuthentication(username="dummy", password="dummy")
-    >>> atlas_client = GlossaryClient(
+    >>> atlas_client = AtlasGlossaryClient(
     >>>     endpoint_url="http://atlas", authentication=atlas_auth
     >>> )
     >>>
@@ -27,13 +26,14 @@ Example:
     >>> )
     >>>
     >>> try:
+    >>>     mapper.fetch_glossary()
     >>>     catalog = mapper.map_glossary_to_dcat_dataset_catalog()
     >>>     print(catalog.to_rdf())
     >>> except Exception as e:
     >>>     print(f"An exception occurred: {e}")
 """
-
 from typing import Any, Dict, List, Optional
+import uuid
 
 from concepttordf import Contact
 from datacatalogtordf import (
@@ -46,10 +46,16 @@ from datacatalogtordf import (
     Location,
     PeriodOfTime,
 )
-from pyapacheatlas.core.glossary import GlossaryClient
+from pyapacheatlas.core.glossary import (
+    AtlasGlossaryTerm,
+)
 
 from .attribute import Attribute
+from .glossaryclient import AtlasGlossaryClient
 from .termtype import TermType
+
+VALUE_SEPERATOR = ";"
+CODE_AND_DESC_SEPERATOR = "|"
 
 
 class MappingError(Exception):
@@ -66,6 +72,12 @@ class TemporalError(MappingError):
 
 class FormatError(MappingError):
     """Exception class for format errors."""
+
+    pass
+
+
+class InvalidStateError(MappingError):
+    """Exception class for invalid state errors."""
 
     pass
 
@@ -98,18 +110,19 @@ def _parse_value(value: str) -> list:
     Returns:
         List of parsed values
     """
-    value_seperator = ";"
-    code_and_desc_seperator = "|"
-
     if value == "":
         return []
 
     codes = map(
-        lambda x: x.split(code_and_desc_seperator)[0].strip(" "),
-        value.split(value_seperator),
+        lambda x: x.split(CODE_AND_DESC_SEPERATOR)[0].strip(" "),
+        value.split(VALUE_SEPERATOR),
     )
 
     return list(codes)
+
+
+def _format_value(codes: List[List]) -> str:
+    return VALUE_SEPERATOR.join(CODE_AND_DESC_SEPERATOR.join(c) for c in codes)
 
 
 def _first_if_exists(a_list: list) -> str:
@@ -125,22 +138,6 @@ def _first_if_exists(a_list: list) -> str:
         return a_list[0]
 
     return ""
-
-
-def _get_term_attributes(term: Dict) -> Optional[Any]:
-    """Returns attributes of the given term.
-
-    Args:
-        term: An Atlas glossary term
-
-    Returns:
-        Attributes
-    """
-    return (
-        term.get("additionalAttributes")
-        if "additionalAttributes" in term
-        else term.get("attributes")
-    )
 
 
 def _map_location(locations: List[str]) -> List[Location]:
@@ -173,12 +170,41 @@ def _map_period_of_time(start: str, end: str) -> PeriodOfTime:
     return period
 
 
+def _extract_guid(template: str, value: str) -> str:
+    """Extract guid from value based on template.
+
+    Args:
+        template: The template
+        value: Value to extract from
+
+    Returns:
+        Guid
+    """
+    strings = template.split("{guid}")
+    for s in strings:
+        value = value.replace(s, "")
+
+    return value
+
+
+def _generate_name(value: str) -> str:
+    """Generate term name.
+
+    Args:
+        value: Value to generate the name from
+
+    Returns:
+        Name
+    """
+    return value.replace(" ", "").lower()
+
+
 class AtlasDcatMapper:
     """Class for mapping Atlas Glossary terms to DCAT catalog."""
 
     def __init__(
         self,
-        glossary_client: GlossaryClient,
+        glossary_client: AtlasGlossaryClient,
         glossary_id: str,
         catalog_uri: str,
         catalog_language: str,
@@ -188,11 +214,12 @@ class AtlasDcatMapper:
         distribution_uri_template: str,
         language: str = "nb",
         attr_mapping: Optional[Dict] = None,
+        is_purview: Optional[bool] = None,
     ) -> None:
         """Initializes an AtlasDcatMapper.
 
         Args:
-            glossary_client (GlossaryClient): A GlossaryClient (use pyapacheatlas)
+            glossary_client (AtlasGlossaryClient): An AtlasGlossaryClient
             glossary_id (str): The Atlas glossary id
             catalog_uri (str): URI of this catalog
             catalog_language (str): Language of this catalog
@@ -201,7 +228,9 @@ class AtlasDcatMapper:
             language (str): Content language (default 'nb')
             dataset_uri_template (str): Template for dataset URI
             distribution_uri_template (str): Template for distribution URI
-            attr_mapping (Optional[Dict]): Attribute mapping
+            attr_mapping (Optional[Dict]): Attribute mapping.
+            is_purview (Optional[bool]): If the glossary endpoint is a Purview
+                instance. Auto-detect by default.
         """
         super().__init__()
 
@@ -215,6 +244,73 @@ class AtlasDcatMapper:
         self._dataset_uri_template = dataset_uri_template
         self._distribution_uri_template = distribution_uri_template
         self._attr_mapping = attr_mapping if attr_mapping is not None else {}
+        self._is_purview = (
+            is_purview is None and "purview.azure.com" in glossary_client.endpoint_url
+        ) or (is_purview is not None and is_purview)
+        self._glossary: Optional[Dict] = None
+        self._tmp_glossary_terms: List = []
+
+    @property
+    def glossary_terms(self) -> List[Dict]:
+        """List[Dict], the persisted glossary terms."""
+        if self._glossary is None:
+            raise InvalidStateError(
+                "Glossary is undefined. Check if glossary_id is correct or call one "
+                "of the two mapping functions before using this property."
+            )
+
+        return [item[1] for item in self._glossary.get("termInfo", {}).items()]
+
+    @property
+    def tmp_glossary_terms(self) -> List[Dict]:
+        """Dict, the temporary glossary terms."""  # noqa: B950
+        return self._tmp_glossary_terms
+
+    def _generate_qualified_name(self, value: str) -> str:
+        if self._glossary is None:
+            raise InvalidStateError(
+                "Glossary is undefined. Check if glossary_id is correct."
+            )
+
+        return "{name}@{glossary}".format(
+            name=_generate_name(value), glossary=self._glossary.get("qualifiedName", "")
+        )
+
+    def _get_term_attributes(self, term: Dict) -> Optional[Dict]:
+        """Returns attributes of the given term.
+
+        Args:
+            term: An Atlas glossary term
+
+        Returns:
+            Attributes
+        """
+        return (
+            term.get("attributes")
+            if self._is_purview
+            else term.get("additionalAttributes")
+        )
+
+    def _init_term_attributes(self, term: Dict, term_type: TermType) -> Dict:
+        """Initialize term attributes.
+
+        Args:
+            term: An Atlas glossary term
+            term_type: A term type
+
+        Returns:
+            Attributes
+        """
+        type_attribute = _convert_term_type_to_attribute(term_type)
+        type_attribute_name = self._get_attribute_name(type_attribute)
+
+        if self._is_purview:
+            term["attributes"] = {type_attribute_name: {}}
+        else:
+            term["additionalAttributes"] = {type_attribute_name: {}}
+
+        attributes = self._get_term_attributes(term)
+        return attributes or {}
 
     def _get_attribute_name(self, attr: Attribute) -> str:
         """Return the name of the attribute based on a possible attribute mapping.
@@ -236,7 +332,7 @@ class AtlasDcatMapper:
         Returns:
             Type of term
         """
-        attributes = _get_term_attributes(term)
+        attributes = self._get_term_attributes(term)
         if attributes is not None:
             if self._get_attribute_name(Attribute.DATASET) in attributes:
                 return TermType.DATASET
@@ -276,21 +372,52 @@ class AtlasDcatMapper:
 
         Returns:
             List of string values
+
+        Raises:
+            MappingError: A mapping error if the attributes are undefined
         """
+        attributes = self._get_term_attributes(term)
+
+        if attributes is None:
+            raise MappingError("Term attributes is undefined")
+
         type_attribute = _convert_term_type_to_attribute(term_type)
-        attributes = _get_term_attributes(term)
-        if attributes is not None:
-            type_attributes: Optional[Any] = attributes.get(
-                self._get_attribute_name(type_attribute)
-            )
-            if type_attributes is not None:
-                value = type_attributes.get(self._get_attribute_name(attr))
-                if value is not None:
-                    if parse_value and value is not None:
-                        return _parse_value(value)
-                    else:
-                        return [value]
+        type_attributes: Optional[Any] = attributes.get(
+            self._get_attribute_name(type_attribute)
+        )
+        if type_attributes is not None:
+            value = type_attributes.get(self._get_attribute_name(attr))
+            if value is not None:
+                if parse_value and value is not None:
+                    return _parse_value(value)
+                else:
+                    return [value]
+
         return []
+
+    def _set_attribute_values(
+        self, term: Dict, term_type: TermType, attr: Attribute, values: str
+    ) -> None:
+        """Sets the value of an attribute.
+
+        Args:
+            term: An Atlas glossary term
+            term_type: Term type
+            attr: Attribute
+            values: Attribute values as string
+
+        """
+        attributes = self._get_term_attributes(term)
+
+        if attributes is None:
+            attributes = self._init_term_attributes(term, term_type)
+
+        type_attribute = _convert_term_type_to_attribute(term_type)
+        type_attributes: Optional[Any] = attributes.get(
+            self._get_attribute_name(type_attribute)
+        )
+        if type_attributes is not None:
+            type_attributes[self._get_attribute_name(attr)] = values
 
     def _get_first_attribute_value(
         self,
@@ -313,6 +440,13 @@ class AtlasDcatMapper:
         return _first_if_exists(
             self._get_attribute_values(term, term_type, attr, parse_value)
         )
+
+    def _get_persisted_term(self, guid: str) -> Optional[Dict]:
+        for term in self.glossary_terms:
+            if term.get("guid") == guid:
+                return term
+
+        return None
 
     def _map_keywords(self, keywords: List) -> Optional[Dict]:
         """Maps list of keywords to RDF literal.
@@ -359,7 +493,14 @@ class AtlasDcatMapper:
 
         Raises:
             TemporalError: If mapping to temporal fails
+            InvalidStateError: If glossary is not fetched before calling this function
         """
+        if self._glossary is None:
+            raise InvalidStateError(
+                "Glossary is undefined. Check if glossary_id is correct and call "
+                "fetch_glossary() before calling this function"
+            )
+
         dataset = Dataset()
         # Map attributes
         dataset.identifier = self._dataset_uri_template.format(guid=term.get("guid"))
@@ -447,7 +588,14 @@ class AtlasDcatMapper:
 
         Raises:
             FormatError: If mapping to format fails
+            InvalidStateError: If glossary is not fetched before calling this function
         """
+        if self._glossary is None:
+            raise InvalidStateError(
+                "Glossary is undefined. Check if glossary_id is correct and call "
+                "fetch_glossary() before calling this function"
+            )
+
         distribution = Distribution()
         distribution.identifier = self._distribution_uri_template.format(
             guid=term.get("guid")
@@ -474,18 +622,359 @@ class AtlasDcatMapper:
         distribution.license = self._get_first_attribute_value(
             term, TermType.DISTRIBUTION, Attribute.LICENSE, True
         )
-        distribution.temporal_resolution = self._get_first_attribute_value(
-            term, TermType.DATASET, Attribute.TEMPORAL_RESOLUTION
+        distribution.temporal_resolution = self._get_attribute_values(
+            term, TermType.DATASET, Attribute.TEMPORAL_RESOLUTION, True
         )
 
         return distribution
 
-    def map_glossary_to_dcat_dataset_catalog(self) -> Catalog:
-        """Map glossary to dcat dataset catalog RDF resource.
+    def _map_dataset_to_terms(self, dataset: Dataset) -> List[Dict]:
+        """Maps a dataset RDF resource to glossary terms.
+
+        Args:
+            dataset: A dataset RDF resource
+
+        Returns:
+            A list with glossary terms
+
+        Raises:
+            MappingError: A mapping error if the language does not match
+            InvalidStateError: If glossary is not fetched before calling this function
+        """
+        if self._glossary is None:
+            raise InvalidStateError(
+                "Glossary is undefined. Check if glossary_id is correct and call "
+                "fetch_glossary() before calling this function"
+            )
+
+        if not (hasattr(dataset, "title") and self._language in dataset.title):
+            raise MappingError(
+                "Dataset title is not defined or does not match mapper language."
+            )
+        if not (
+            hasattr(dataset, "description") and self._language in dataset.description
+        ):
+            raise MappingError(
+                "Dataset description title is not defined or does not match mapper language."
+            )
+        if hasattr(dataset, "keyword") and not (self._language in dataset.keyword):
+            raise MappingError("Dataset keyword does not match mapper language.")
+
+        terms = []
+
+        dataset_title = dataset.title.get(self._language)
+        dataset_term = AtlasGlossaryTerm(
+            guid="tmp-{}".format(uuid.uuid4()),
+            glossaryGuid=self._glossary_id,
+            name=_generate_name(dataset_title),
+            qualifiedName=self._generate_qualified_name(dataset_title),
+            longDescription=dataset.description.get(self._language),
+        ).to_json()
+
+        if hasattr(dataset, "identifier"):
+            guid = _extract_guid(self._dataset_uri_template, dataset.identifier)
+            dataset_term = self._get_persisted_term(guid)
+            if dataset_term is None:
+                raise MappingError(
+                    "Could not find term with guid {guid}".format(guid=guid)
+                )
+
+        dataset_term["longDescription"] = dataset.description.get(self._language)
+
+        self._set_attribute_values(
+            dataset_term,
+            TermType.DATASET,
+            Attribute.TITLE,
+            dataset.title[self._language],
+        )
+        self._set_attribute_values(
+            dataset_term,
+            TermType.DATASET,
+            Attribute.PUBLISHER,
+            _format_value([[dataset.publisher, ""]])
+            if hasattr(dataset, "publisher")
+            else "",
+        )
+        self._set_attribute_values(
+            dataset_term,
+            TermType.DATASET,
+            Attribute.FREQUENCY,
+            _format_value([[dataset.frequency, ""]])
+            if hasattr(dataset, "frequency")
+            else "",
+        )
+        self._set_attribute_values(
+            dataset_term,
+            TermType.DATASET,
+            Attribute.ACCESS_RIGHTS,
+            _format_value([[dataset.access_rights, ""]])
+            if hasattr(dataset, "access_rights")
+            else "",
+        )
+        self._set_attribute_values(
+            dataset_term,
+            TermType.DATASET,
+            Attribute.THEME,
+            _format_value([[item, ""] for item in dataset.theme])
+            if hasattr(dataset, "theme")
+            else "",
+        )
+        self._set_attribute_values(
+            dataset_term,
+            TermType.DATASET,
+            Attribute.KEYWORD,
+            _format_value([[item] for item in dataset.keyword.get(self._language)])
+            if hasattr(dataset, "keyword")
+            else "",
+        )
+        self._set_attribute_values(
+            dataset_term,
+            TermType.DATASET,
+            Attribute.SPATIAL,
+            _format_value([[item.identifier, ""] for item in dataset.spatial])
+            if hasattr(dataset, "spatial")
+            else "",
+        )
+        self._set_attribute_values(
+            dataset_term,
+            TermType.DATASET,
+            Attribute.SPATIAL_RESOLUTION_IN_METERS,
+            _format_value([[item] for item in dataset.spatial_resolution_in_meters])
+            if hasattr(dataset, "spatial_resolution_in_meters")
+            else "",
+        )
+        self._set_attribute_values(
+            dataset_term,
+            TermType.DATASET,
+            Attribute.TEMPORAL_START_DATE,
+            dataset.temporal[0].start_date
+            if hasattr(dataset, "temporal") and len(dataset.temporal) > 0
+            else "",
+        )
+        self._set_attribute_values(
+            dataset_term,
+            TermType.DATASET,
+            Attribute.TEMPORAL_END_DATE,
+            dataset.temporal[0].end_date
+            if hasattr(dataset, "temporal") and len(dataset.temporal) > 0
+            else "",
+        )
+        self._set_attribute_values(
+            dataset_term,
+            TermType.DATASET,
+            Attribute.SPATIAL_RESOLUTION_IN_METERS,
+            _format_value([[item] for item in dataset.temporal_resolution])
+            if hasattr(dataset, "temporal_resolution")
+            else "",
+        )
+        self._set_attribute_values(
+            dataset_term,
+            TermType.DATASET,
+            Attribute.CONTACT_NAME,
+            dataset.contactpoint.name[self._language]
+            if hasattr(dataset, "contactpoint")
+            else "",
+        )
+        self._set_attribute_values(
+            dataset_term,
+            TermType.DATASET,
+            Attribute.CONTACT_EMAIL,
+            dataset.contactpoint.email if hasattr(dataset, "contactpoint") else "",
+        )
+        self._set_attribute_values(
+            dataset_term,
+            TermType.DATASET,
+            Attribute.LICENSE,
+            _format_value([[dataset.license, ""]])
+            if hasattr(dataset, "license")
+            else "",
+        )
+
+        terms.append(dataset_term)
+        for dist in dataset.distributions:
+            dist_term = self._map_distribution_to_term(dist)
+            dist_term["seeAlso"].append(
+                {
+                    "termGuid": dataset_term.get("guid"),
+                    "displayText": dataset_term.get("name"),
+                }
+            )
+
+            terms.append(dist_term)
+
+        return terms
+
+    def _map_distribution_to_term(self, distribution: Distribution) -> Dict:
+        """Maps a distribution RDF resource to glossary term.
+
+        Args:
+            distribution: A distribution RDF resource
+
+        Returns:
+            A glossary term
+
+        Raises:
+            MappingError: A mapping error if the language does not match
+            InvalidStateError: If glossary is not fetched before calling this function
+        """
+        if self._glossary is None:
+            raise InvalidStateError(
+                "Glossary is undefined. Check if glossary_id is correct and call "
+                "fetch_glossary() before calling this function"
+            )
+
+        if not (
+            hasattr(distribution, "title") and self._language in distribution.title
+        ):
+            raise MappingError(
+                "Distribution title is not defined or does not match mapper language."
+            )
+        if not (
+            hasattr(distribution, "description")
+            and self._language in distribution.description
+        ):
+            raise MappingError(
+                "Distribution description title is not defined or does not match "
+                "mapper language."
+            )
+
+        distribution_title = distribution.title.get(self._language)
+        distribution_term = AtlasGlossaryTerm(
+            guid="tmp-{}".format(uuid.uuid4()),
+            glossaryGuid=self._glossary_id,
+            name=_generate_name(distribution_title),
+            qualifiedName=self._generate_qualified_name(distribution_title),
+            longDescription=distribution.description[self._language],
+        ).to_json()
+
+        if hasattr(distribution, "identifier"):
+            guid = _extract_guid(self._dataset_uri_template, distribution.identifier)
+            distribution_term = self._get_persisted_term(guid)
+
+        distribution_term["longDescription"] = distribution.description.get(
+            self._language
+        )
+        distribution_term["seeAlso"] = []
+
+        self._set_attribute_values(
+            distribution_term,
+            TermType.DISTRIBUTION,
+            Attribute.TITLE,
+            distribution.title[self._language],
+        )
+
+        self._set_attribute_values(
+            distribution_term,
+            TermType.DISTRIBUTION,
+            Attribute.FORMAT,
+            _format_value([[item, ""] for item in distribution.formats]),
+        )
+        self._set_attribute_values(
+            distribution_term,
+            TermType.DISTRIBUTION,
+            Attribute.ACCESS_URL,
+            _format_value([[distribution.access_URL, ""]])
+            if hasattr(distribution, "access_URL")
+            else "",
+        )
+        self._set_attribute_values(
+            distribution_term,
+            TermType.DISTRIBUTION,
+            Attribute.DOWNLOAD_URL,
+            _format_value([[distribution.download_URL, ""]])
+            if hasattr(distribution, "download_URL")
+            else "",
+        )
+        self._set_attribute_values(
+            distribution_term,
+            TermType.DISTRIBUTION,
+            Attribute.LICENSE,
+            _format_value([[distribution.license, ""]])
+            if hasattr(distribution, "license")
+            else "",
+        )
+        self._set_attribute_values(
+            distribution_term,
+            TermType.DISTRIBUTION,
+            Attribute.TEMPORAL_RESOLUTION,
+            _format_value([[item] for item in distribution.temporal_resolution])
+            if hasattr(distribution, "temporal_resolution")
+            else "",
+        )
+
+        return distribution_term
+
+    def fetch_glossary(self) -> None:
+        """Fetch detailed glossary."""
+        self._glossary = self._glossary_client.get_glossary(
+            guid=self._glossary_id, detailed=True
+        )
+
+    def save_glossary_terms(self) -> None:
+        """Save glossary terms.
+
+        Raises:
+            InvalidStateError: If there are no terms to save.
+        """
+        if len(self._tmp_glossary_terms) == 0:
+            raise InvalidStateError(
+                "No terms to save. Call map_dataset_catalog_to_glossary_terms()."
+            )
+
+        dataset_terms = list(
+            filter(
+                lambda term: self._get_term_type(term) == TermType.DATASET,
+                self._tmp_glossary_terms,
+            )
+        )
+        distribution_terms = list(
+            filter(
+                lambda term: self._get_term_type(term) == TermType.DISTRIBUTION,
+                self._tmp_glossary_terms,
+            )
+        )
+
+        for i in range(len(dataset_terms)):
+            original_dataset_guid = dataset_terms[i].get("guid", "")
+            if original_dataset_guid.startswith("tmp-"):
+                dataset_terms[i].pop("guid")
+                dataset_terms[i] = self._glossary_client.upload_term(dataset_terms[i])
+            else:
+                dataset_terms[i] = self._glossary_client.update_term(dataset_terms[i])
+
+            for j in range(len(distribution_terms)):
+                found = False
+                for rel in distribution_terms[j].get("seeAlso"):
+                    if rel["termGuid"] == original_dataset_guid:
+                        found = True
+                        rel["termGuid"] = dataset_terms[i].get("guid")
+
+                if found:
+                    if distribution_terms[j].get("guid", "").startswith("tmp-"):
+                        distribution_terms[j].pop("guid")
+                        distribution_terms[j] = self._glossary_client.upload_term(
+                            distribution_terms[j]
+                        )
+                    else:
+                        distribution_terms[j] = self._glossary_client.update_term(
+                            distribution_terms[j]
+                        )
+
+    def map_glossary_terms_to_dataset_catalog(self) -> Catalog:
+        """Map glossary terms to dcat dataset catalog RDF resource.
 
         Returns:
             A catalog RDF resource.
+
+        Raises:
+            InvalidStateError: If glossary is not fetched before calling this function
         """
+        if self._glossary is None:
+            raise InvalidStateError(
+                "Glossary is undefined. Check if glossary_id is correct and call "
+                "fetch_glossary() before calling this function"
+            )
+
         catalog = Catalog()
         catalog.identifier = self._catalog_uri
         catalog.title = {self._language: self._catalog_title}
@@ -493,16 +982,11 @@ class AtlasDcatMapper:
         catalog.language = [self._catalog_language]
         catalog.license = ""
 
-        # Fetch detailed glossary
-        glossary = self._glossary_client.get_glossary(
-            guid=self._glossary_id, detailed=True
-        )
-
         dataset_terms = []
         distribution_terms = []
 
         # Separate terms based on type
-        for (_, term) in glossary.get("termInfo", []).items():
+        for term in self.glossary_terms:
             term_type = self._get_term_type(term)
             if term_type == TermType.DATASET and self._include_in_dcat(
                 term, TermType.DATASET
@@ -518,3 +1002,28 @@ class AtlasDcatMapper:
             catalog.datasets.append(self._map_term_to_dataset(term, distribution_terms))
 
         return catalog
+
+    def map_dataset_catalog_to_glossary_terms(self, catalog: Catalog) -> None:
+        """Map dcat dataset catalog RDF resource to glossary terms.
+
+        Args:
+            catalog: A dataset catalog RDF resource
+
+        Raises:
+            MappingError: A mapping error if the language does not match
+            InvalidStateError: If glossary is not fetched before calling this function
+        """
+        if self._glossary is None:
+            raise InvalidStateError(
+                "Glossary is undefined. Check if glossary_id is correct and call "
+                "fetch_glossary() before calling this function"
+            )
+
+        if self._language not in catalog.language:
+            raise MappingError("Language in mapper does not match catalog language")
+
+        terms: List = []
+        for dataset in catalog.datasets:
+            terms = terms + self._map_dataset_to_terms(dataset)
+
+        self._tmp_glossary_terms = terms

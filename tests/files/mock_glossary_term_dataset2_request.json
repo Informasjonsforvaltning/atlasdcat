@@ -1,0 +1,25 @@
+{
+    "qualifiedName": "dataset2@myglossary",
+    "name": "dataset2",
+    "longDescription": "Dataset 2 description",
+    "anchor": {
+        "glossaryGuid": "myglossary"
+    },
+    "attributes": {
+		"Datasett": {
+			"Dataeier": "",
+			"DataeierEpost": "",
+			"Emneord": "",
+			"GeografiskAvgrensning": "",
+			"Lisens": "",
+			"Oppdateringsfrekvens": "",
+			"Tema": "",
+			"Tilgangsnivå": "",
+			"Tittel": "Dataset 2",
+			"Utgiver": "",
+			"spatialResolutionInMeters": "",
+			"temporalEndDate": "",
+			"temporalStartDate": ""
+		}
+	}
+}

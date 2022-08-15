@@ -15,7 +15,7 @@ repository = "https://github.com/Informasjonsforvaltning/atlasdcat"
 version = "1.0.1"
 
 [tool.poetry.dependencies]
-datacatalogtordf = "^2.1.0"
+datacatalogtordf = "^2.1.2"
 pyapacheatlas = "^0.13.1"
 python = ">=3.8,<3.11"
 python-dotenv = "^0.20.0"

@@ -15,6 +15,7 @@ class Attribute(str, Enum):
     DOWNLOAD_URL = "downloadURL"
     FORMAT = "format"
     FREQUENCY = "frequency"
+    GENERATED = "generated"
     INCLUDE_IN_DCAT = "includeInDCAT"
     KEYWORD = "keyword"
     LICENSE = "license"

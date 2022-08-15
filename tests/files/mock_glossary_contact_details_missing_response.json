@@ -12,7 +12,7 @@
     "termInfo": {
         "0ae16586-ddbd-463a-bac3-ecc57f33e4d3": {
             "guid": "0ae16586-ddbd-463a-bac3-ecc57f33e4d3",
-            "qualifiedName": "kunngjoringer@Glossary",
+            "qualifiedName": "kunngjoringer@myglossary",
             "name": "kunngjoringer",
             "longDescription": "Doffin er den nasjonale kunngjøringsdatabasen for offentlige anskaffelser Doffin hjelpe oppdragsgivere med å lage og publisere kunngjøringer i samsvar med regelverket, og gjøre det enkelt for leverandører å finne relevante konkurranser i offentlig sektor.",
             "lastModifiedTS": "14",
@@ -73,7 +73,7 @@
             },
             "glossaryTermHeader": {
                 "termGuid": "0ae16586-ddbd-463a-bac3-ecc57f33e4d3",
-                "qualifiedName": "kunngjoringer@Glossary"
+                "qualifiedName": "kunngjoringer@myglossary"
             }
         }
     }

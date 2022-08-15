@@ -1,7 +1,7 @@
 {
     "guid": "ef38fdb9-bbd5-4c5e-92fd-30bebc07a3f1",
-    "qualifiedName": "Glossary",
-    "name": "Glossary",
+    "qualifiedName": "myglossary",
+    "name": "myglossary",
     "terms": [
         {
             "termGuid": "0ae16586-ddbd-463a-bac3-ecc57f33e4d3",
@@ -72,7 +72,7 @@
     "termInfo": {
         "b87714c2-31a7-4249-8b94-fa5990eae45c": {
             "guid": "b87714c2-31a7-4249-8b94-fa5990eae45c",
-            "qualifiedName": "cpv@Glossary",
+            "qualifiedName": "cpv@myglossary",
             "name": "cpv",
             "longDescription": "Formålet med CPV er å standardisere betegnelsene som oppdragsgiverne bruker til å beskrive gjenstanden i kontrakter. Ved å gruppere anskaffelser etter ulike CPV numre, blir det enklere for leverandørene å søke etter relevante kunngjøringer i databasene. Et sentralt hensyn bak systemet er at en tilbyder med et helt annet morsmål skal kunne skjønne hva oppdragsgiveren er ute etter.",
             "lastModifiedTS": "5",
@@ -101,7 +101,7 @@
                 "Datasett": {
                     "TidsmessigAvgrensetTil": 0,
                     "Tema": "https://psi.norge.no/los/ord/offentlig-innkjop | Offentlige innkjøp;http://publications.europa.eu/resource/authority/data-theme/GOVE | Forvaltning og offentlig sektor",
-                    "Utgiver": "https://organization-catalog.fellesdatakatalog.digdir.no/organizations/986252932 | Direktoratet for forvaltning og økonomistyring",
+                    "Utgiver": "986252932 | Direktoratet for forvaltning og økonomistyring",
                     "Dokumentasjon": "https://simap.ted.europa.eu/web/simap/cpv",
                     "DataeierEpost": "myemail@email.com",
                     "Geografisk avgrensning": null,
@@ -110,10 +110,10 @@
                     "TidsmessigAvgrensetFra": 0,
                     "GeografiskAvgrensning": "",
                     "Type": "CODE_LIST | Kodelister",
-                    "Tilgangsnivå": "http://publications.europa.eu/resource/authority/access-right/PUBLIC | Allmenn tilgang",
+                    "Tilgangsnivå": "PUBLIC | Allmenn tilgang",
                     "PubliseresPåFellesDatakatalog": "Ja",
                     "Tidsmessig avgrenset fra": 0,
-                    "Oppdateringsfrekvens": "http://publications.europa.eu/resource/authority/frequency/IRREG | Uregelmessig",
+                    "Oppdateringsfrekvens": "IRREG | Uregelmessig",
                     "Tidsmessig avgrenset til": 0,
                     "Dataeier": "Contact X",
                     "temporalStartDate": "2020-10-10",
@@ -122,12 +122,12 @@
             },
             "glossaryTermHeader": {
                 "termGuid": "b87714c2-31a7-4249-8b94-fa5990eae45c",
-                "qualifiedName": "cpv@Glossary"
+                "qualifiedName": "cpv@myglossary"
             }
         },
         "51465d03-54e0-47ab-b685-56cacb216a68": {
             "guid": "51465d03-54e0-47ab-b685-56cacb216a68",
-            "qualifiedName": "kjoretoy-informasjonsmodell@Glossary",
+            "qualifiedName": "kjoretoy-informasjonsmodell@myglossary",
             "name": "kjoretoy-informasjonsmodell",
             "longDescription": "Informasjonsmodell som viser hvordan data til alle offentlige kjøretøy.",
             "lastModifiedTS": "2",
@@ -149,18 +149,18 @@
             ],
             "attributes": {
                 "Informasjonsmodell": {
-                    "Utgiver": "https://organization-catalog.fellesdatakatalog.digdir.no/organizations/971032081 | Statens vegvesen",
+                    "Utgiver": "971032081 | Statens vegvesen",
                     "Tittel": "Kjøretøyregisteret - Informasjonsmodell"
                 }
             },
             "glossaryTermHeader": {
                 "termGuid": "51465d03-54e0-47ab-b685-56cacb216a68",
-                "qualifiedName": "kjoretoy-informasjonsmodell@Glossary"
+                "qualifiedName": "kjoretoy-informasjonsmodell@myglossary"
             }
         },
         "63ce0a90-2b84-4bde-891a-f2cc4f1af12d": {
             "guid": "63ce0a90-2b84-4bde-891a-f2cc4f1af12d",
-            "qualifiedName": "kommuneinndeling@Glossary",
+            "qualifiedName": "kommuneinndeling@myglossary",
             "name": "kommuneinndeling",
             "longDescription": "Informasjon om areal og befolkning i kommuner",
             "lastModifiedTS": "3",
@@ -177,7 +177,7 @@
                 "Datasett": {
                     "TidsmessigAvgrensetTil": 0,
                     "Tema": "http://publications.europa.eu/resource/authority/data-theme/GOVE | Forvaltning og offentlig sektor",
-                    "Utgiver": "https://organization-catalog.fellesdatakatalog.digdir.no/organizations/971526920 | Statistisk sentralbyrå",
+                    "Utgiver": "971526920 | Statistisk sentralbyrå",
                     "Dokumentasjon": "https://data.brreg.no/enhetsregisteret/api/docs/index.html",
                     "DataeierEpost": "martin.standley@dfo.no",
                     "Geografisk avgrensning": null,
@@ -186,7 +186,7 @@
                     "TidsmessigAvgrensetFra": 0,
                     "GeografiskAvgrensning": "https://data.geonorge.no/administrativeEnheter/nasjon/id/173163 | Norge",
                     "Type": "CODE_LIST | Kodelister",
-                    "Tilgangsnivå": "http://publications.europa.eu/resource/authority/access-right/PUBLIC | Allmenn tilgang",
+                    "Tilgangsnivå": "PUBLIC | Allmenn tilgang",
                     "PubliseresPåFellesDatakatalog": "Nei",
                     "Tidsmessig avgrenset fra": 0,
                     "Oppdateringsfrekvens": null,
@@ -196,12 +196,12 @@
             },
             "glossaryTermHeader": {
                 "termGuid": "63ce0a90-2b84-4bde-891a-f2cc4f1af12d",
-                "qualifiedName": "kommuneinndeling@Glossary"
+                "qualifiedName": "kommuneinndeling@myglossary"
             }
         },
         "e4c86fd7-73f9-4957-b286-8d6c7181c69e": {
             "guid": "e4c86fd7-73f9-4957-b286-8d6c7181c69e",
-            "qualifiedName": "kjoretoy@Glossary",
+            "qualifiedName": "kjoretoy@myglossary",
             "name": "kjoretoy",
             "longDescription": "Generell informasjon om kjøretøy, navn, registreringstidspunkt, registreringsnummer, kjøretøytype.",
             "lastModifiedTS": "3",
@@ -225,7 +225,7 @@
                 "Datasett": {
                     "TidsmessigAvgrensetTil": 0,
                     "Tema": "https://psi.norge.no/los/ord/trafikk-og-transport | Trafikk og transport;https://psi.norge.no/los/ord/natur-klima-og-miljo | Natur klima og miljø",
-                    "Utgiver": "https://organization-catalog.fellesdatakatalog.digdir.no/organizations/971032081 | Statens vegvesen",
+                    "Utgiver": "971032081 | Statens vegvesen",
                     "Dokumentasjon": null,
                     "DataeierEpost": "martin.standley@dfo.no",
                     "Geografisk avgrensning": null,
@@ -237,19 +237,19 @@
                     "Tilgangsnivå": "RESTRICTED | Betinget tilgang",
                     "PubliseresPåFellesDatakatalog": "Nei",
                     "Tidsmessig avgrenset fra": 0,
-                    "Oppdateringsfrekvens": "http://publications.europa.eu/resource/authority/frequency/MONTHLY | Månedlig",
+                    "Oppdateringsfrekvens": "MONTHLY | Månedlig",
                     "Tidsmessig avgrenset til": 0,
                     "Dataeier": "Martin de Laine Standley"
                 }
             },
             "glossaryTermHeader": {
                 "termGuid": "e4c86fd7-73f9-4957-b286-8d6c7181c69e",
-                "qualifiedName": "kjoretoy@Glossary"
+                "qualifiedName": "kjoretoy@myglossary"
             }
         },
         "fd8bca51-640a-4930-a31b-446c8aec9bc2": {
             "guid": "fd8bca51-640a-4930-a31b-446c8aec9bc2",
-            "qualifiedName": "sektorkodeliste@Glossary",
+            "qualifiedName": "sektorkodeliste@myglossary",
             "name": "sektorkodeliste",
             "longDescription": "Konvertering fra 2-4 bokstavs organisasjonsformer i enhetsreg til korte og lang navn. Merk navn (sektor men egentlig konverterer org. former)",
             "lastModifiedTS": "2",
@@ -266,7 +266,7 @@
                 "Datasett": {
                     "TidsmessigAvgrensetTil": 0,
                     "Tema": "http://publications.europa.eu/resource/authority/data-theme/GOVE | Forvaltning og offentlig sektor",
-                    "Utgiver": "https://organization-catalog.fellesdatakatalog.digdir.no/organizations/974760673 | Brønnøysundregisterne",
+                    "Utgiver": "974760673 | Brønnøysundregisterne",
                     "Dokumentasjon": null,
                     "DataeierEpost": "martin.standley@dfo.no",
                     "Geografisk avgrensning": null,
@@ -275,22 +275,22 @@
                     "TidsmessigAvgrensetFra": 0,
                     "GeografiskAvgrensning": "https://data.geonorge.no/administrativeEnheter/nasjon/id/173163 | Norge",
                     "Type": "CODE_LIST | Kodelister",
-                    "Tilgangsnivå": "http://publications.europa.eu/resource/authority/access-right/PUBLIC | Allmenn tilgang",
+                    "Tilgangsnivå": "PUBLIC | Allmenn tilgang",
                     "PubliseresPåFellesDatakatalog": "Nei",
                     "Tidsmessig avgrenset fra": 0,
-                    "Oppdateringsfrekvens": "http://publications.europa.eu/resource/authority/frequency/IRREG | Uregelmessig",
+                    "Oppdateringsfrekvens": "IRREG | Uregelmessig",
                     "Tidsmessig avgrenset til": 0,
                     "Dataeier": "Martin de Laine Standley"
                 }
             },
             "glossaryTermHeader": {
                 "termGuid": "fd8bca51-640a-4930-a31b-446c8aec9bc2",
-                "qualifiedName": "sektorkodeliste@Glossary"
+                "qualifiedName": "sektorkodeliste@myglossary"
             }
         },
         "9009e3c9-a96c-47d1-8f89-143f456a01ba": {
             "guid": "9009e3c9-a96c-47d1-8f89-143f456a01ba",
-            "qualifiedName": "lokasjonskoder@Glossary",
+            "qualifiedName": "lokasjonskoder@myglossary",
             "name": "lokasjonskoder",
             "longDescription": "Koder for land, region og kommuner med doffinkoder\n",
             "lastModifiedTS": "1",
@@ -314,7 +314,7 @@
                 "Datasett": {
                     "TidsmessigAvgrensetTil": 0,
                     "Tema": "http://publications.europa.eu/resource/authority/data-theme/REGI | Regioner og byer;http://publications.europa.eu/resource/authority/data-theme/GOVE | Forvaltning og offentlig sektor",
-                    "Utgiver": "https://organization-catalog.fellesdatakatalog.digdir.no/organizations/986252932 | Direktoratet for forvaltning og økonomistyring",
+                    "Utgiver": "986252932 | Direktoratet for forvaltning og økonomistyring",
                     "Dokumentasjon": "https://simap.ted.europa.eu/nuts",
                     "DataeierEpost": "myemail@email.com",
                     "Geografisk avgrensning": null,
@@ -323,22 +323,22 @@
                     "TidsmessigAvgrensetFra": 0,
                     "GeografiskAvgrensning": "http://publications.europa.eu/resource/authority/country/NOR | Norge",
                     "Type": "CODE_LIST | Kodelister",
-                    "Tilgangsnivå": "http://publications.europa.eu/resource/authority/access-right/PUBLIC | Allmenn tilgang",
+                    "Tilgangsnivå": "PUBLIC | Allmenn tilgang",
                     "PubliseresPåFellesDatakatalog": "Nei",
                     "Tidsmessig avgrenset fra": 0,
-                    "Oppdateringsfrekvens": "http://publications.europa.eu/resource/authority/frequency/IRREG | Uregelmessig",
+                    "Oppdateringsfrekvens": "IRREG | Uregelmessig",
                     "Tidsmessig avgrenset til": 0,
                     "Dataeier": "Contact X"
                 }
             },
             "glossaryTermHeader": {
                 "termGuid": "9009e3c9-a96c-47d1-8f89-143f456a01ba",
-                "qualifiedName": "lokasjonskoder@Glossary"
+                "qualifiedName": "lokasjonskoder@myglossary"
             }
         },
         "a25dfc99-2f86-41df-8b6b-4a924421e321": {
             "guid": "a25dfc99-2f86-41df-8b6b-4a924421e321",
-            "qualifiedName": "regnskapsdata@Glossary",
+            "qualifiedName": "regnskapsdata@myglossary",
             "name": "regnskapsdata",
             "longDescription": "Generell informasjon om regnskapet til de ulike statlige virksomhetene",
             "lastModifiedTS": "3",
@@ -355,7 +355,7 @@
                 "Datasett": {
                     "TidsmessigAvgrensetTil": 0,
                     "Tema": "https://psi.norge.no/los/ord/skatt-og-avgift | Skatt og avgift",
-                    "Utgiver": "https://organization-catalog.fellesdatakatalog.digdir.no/organizations/986252932 | Direktoratet for forvaltning og økonomistyring",
+                    "Utgiver": "986252932 | Direktoratet for forvaltning og økonomistyring",
                     "Dokumentasjon": null,
                     "DataeierEpost": "Erik.Auset@dfo.no",
                     "Geografisk avgrensning": null,
@@ -367,19 +367,19 @@
                     "Tilgangsnivå": "RESTRICTED | Betinget tilgang",
                     "PubliseresPåFellesDatakatalog": "Nei",
                     "Tidsmessig avgrenset fra": 0,
-                    "Oppdateringsfrekvens": "http://publications.europa.eu/resource/authority/frequency/ANNUAL | Årlig",
+                    "Oppdateringsfrekvens": "ANNUAL | Årlig",
                     "Tidsmessig avgrenset til": 0,
                     "Dataeier": "Erik Auset"
                 }
             },
             "glossaryTermHeader": {
                 "termGuid": "a25dfc99-2f86-41df-8b6b-4a924421e321",
-                "qualifiedName": "regnskapsdata@Glossary"
+                "qualifiedName": "regnskapsdata@myglossary"
             }
         },
         "2ce1fe15-04b3-4617-ad86-647fa829de7e": {
             "guid": "2ce1fe15-04b3-4617-ad86-647fa829de7e",
-            "qualifiedName": "enhetsregisteret@Glossary",
+            "qualifiedName": "enhetsregisteret@myglossary",
             "name": "enhetsregisteret",
             "longDescription": "Inneholder grunndata om virksomheter. Enhetsregisteret tildeler et ni-sifret organisasjonsnummer til alle som blir registrert. Strukturert i enheter og underenheter.",
             "lastModifiedTS": "5",
@@ -396,7 +396,7 @@
                 "Datasett": {
                     "TidsmessigAvgrensetTil": 0,
                     "Tema": "http://publications.europa.eu/resource/authority/data-theme/GOVE | Forvaltning og offentlig sektor",
-                    "Utgiver": "https://organization-catalog.fellesdatakatalog.digdir.no/organizations/974760673 | Brønnøysundregisterne",
+                    "Utgiver": "974760673 | Brønnøysundregisterne",
                     "Dokumentasjon": "https://data.brreg.no/enhetsregisteret/api/docs/index.html",
                     "DataeierEpost": "myemail@email.com",
                     "Geografisk avgrensning": null,
@@ -405,22 +405,22 @@
                     "TidsmessigAvgrensetFra": 0,
                     "GeografiskAvgrensning": "https://data.geonorge.no/administrativeEnheter/nasjon/id/173163 | Norge",
                     "Type": "DATA | Datasett",
-                    "Tilgangsnivå": "http://publications.europa.eu/resource/authority/access-right/PUBLIC | Allmenn tilgang",
+                    "Tilgangsnivå": "PUBLIC | Allmenn tilgang",
                     "PubliseresPåFellesDatakatalog": "Nei",
                     "Tidsmessig avgrenset fra": 0,
-                    "Oppdateringsfrekvens": "http://publications.europa.eu/resource/authority/frequency/MONTHLY | Månedlig",
+                    "Oppdateringsfrekvens": "MONTHLY | Månedlig",
                     "Tidsmessig avgrenset til": 0,
                     "Dataeier": "Contact X"
                 }
             },
             "glossaryTermHeader": {
                 "termGuid": "2ce1fe15-04b3-4617-ad86-647fa829de7e",
-                "qualifiedName": "enhetsregisteret@Glossary"
+                "qualifiedName": "enhetsregisteret@myglossary"
             }
         },
         "311a049a-5166-485e-b823-a5ff65f5a3c2": {
             "guid": "311a049a-5166-485e-b823-a5ff65f5a3c2",
-            "qualifiedName": "konkurransegrunnlag@Glossary",
+            "qualifiedName": "konkurransegrunnlag@myglossary",
             "name": "konkurransegrunnlag",
             "longDescription": "Konkurransedokumenter knyttet til kunngjøring av offentlig anskaffelser på Doffin.no, utformet av oppdragsgiver. ",
             "lastModifiedTS": "2",
@@ -454,7 +454,7 @@
                 "UnknownTermType": {
                     "TidsmessigAvgrensetTil": 0,
                     "Tema": "https://psi.norge.no/los/ord/offentlig-innkjop | Offentlige innkjøp",
-                    "Utgiver": "https://organization-catalog.fellesdatakatalog.digdir.no/organizations/986252932 | Direktoratet for forvaltning og økonomistyring",
+                    "Utgiver": "986252932 | Direktoratet for forvaltning og økonomistyring",
                     "Dokumentasjon": null,
                     "DataeierEpost": "jonas.karstensen@dfo.no",
                     "Geografisk avgrensning": null,
@@ -466,19 +466,19 @@
                     "Tilgangsnivå": null,
                     "PubliseresPåFellesDatakatalog": "Nei",
                     "Tidsmessig avgrenset fra": 0,
-                    "Oppdateringsfrekvens": "http://publications.europa.eu/resource/authority/frequency/DAILY | Daglig",
+                    "Oppdateringsfrekvens": "DAILY | Daglig",
                     "Tidsmessig avgrenset til": 0,
                     "Dataeier": "Jonas Karstensen"
                 }
             },
             "glossaryTermHeader": {
                 "termGuid": "311a049a-5166-485e-b823-a5ff65f5a3c2",
-                "qualifiedName": "konkurransegrunnlag@Glossary"
+                "qualifiedName": "konkurransegrunnlag@myglossary"
             }
         },
         "c52f7edf-98b3-404b-a4d2-e2677fb0572d": {
             "guid": "c52f7edf-98b3-404b-a4d2-e2677fb0572d",
-            "qualifiedName": "utslippsintensiteter@Glossary",
+            "qualifiedName": "utslippsintensiteter@myglossary",
             "name": "utslippsintensiteter",
             "longDescription": "Dataene består av utslipp (CO2-ekvivalenter) per krone fordelt på innkjøpsrelevante artskontoer i henhold til statsregnskapet. Dataene gir utslippsintensiteter fordelt på scope 1, 2 og 3, samt innland og utland.",
             "lastModifiedTS": "1",
@@ -495,7 +495,7 @@
                 "Datasett": {
                     "TidsmessigAvgrensetTil": 0,
                     "Tema": "https://psi.norge.no/los/ord/natur-klima-og-miljo | Natur klima og miljø",
-                    "Utgiver": "https://organization-catalog.fellesdatakatalog.digdir.no/organizations/986252932 | Direktoratet for forvaltning og økonomistyring",
+                    "Utgiver": "986252932 | Direktoratet for forvaltning og økonomistyring",
                     "Dokumentasjon": null,
                     "DataeierEpost": "jonas.karstensen@dfo.no",
                     "Geografisk avgrensning": null,
@@ -504,10 +504,10 @@
                     "TidsmessigAvgrensetFra": 0,
                     "GeografiskAvgrensning": "https://data.geonorge.no/administrativeEnheter/nasjon/id/173163 | Norge",
                     "Type": "DATA | Datasett",
-                    "Tilgangsnivå": "http://publications.europa.eu/resource/authority/access-right/PUBLIC | Allmenn tilgang",
+                    "Tilgangsnivå": "PUBLIC | Allmenn tilgang",
                     "PubliseresPåFellesDatakatalog": "Ja",
                     "Tidsmessig avgrenset fra": 0,
-                    "Oppdateringsfrekvens": "http://publications.europa.eu/resource/authority/frequency/IRREG | Uregelmessig",
+                    "Oppdateringsfrekvens": "IRREG | Uregelmessig",
                     "Tidsmessig avgrenset til": 0,
                     "Dataeier": "Jonas Karstensen",
                     "temporalStartDate": "2020-10-10",
@@ -516,12 +516,12 @@
             },
             "glossaryTermHeader": {
                 "termGuid": "c52f7edf-98b3-404b-a4d2-e2677fb0572d",
-                "qualifiedName": "utslippsintensiteter@Glossary"
+                "qualifiedName": "utslippsintensiteter@myglossary"
             }
         },
         "0ae16586-ddbd-463a-bac3-ecc57f33e4d3": {
             "guid": "0ae16586-ddbd-463a-bac3-ecc57f33e4d3",
-            "qualifiedName": "kunngjoringer@Glossary",
+            "qualifiedName": "kunngjoringer@myglossary",
             "name": "kunngjoringer",
             "longDescription": "Doffin er den nasjonale kunngjøringsdatabasen for offentlige anskaffelser Doffin hjelpe oppdragsgivere med å lage og publisere kunngjøringer i samsvar med regelverket, og gjøre det enkelt for leverandører å finne relevante konkurranser i offentlig sektor.",
             "lastModifiedTS": "14",
@@ -565,7 +565,7 @@
                 "Datasett": {
                     "TidsmessigAvgrensetTil": 0,
                     "Tema": "https://psi.norge.no/los/ord/offentlig-innkjop | Offentlige innkjøp; http://publications.europa.eu/resource/authority/data-theme/GOVE | Forvaltning og offentlig sektor",
-                    "Utgiver": "https://organization-catalog.fellesdatakatalog.digdir.no/organizations/986252932 | Direktoratet for forvaltning og økonomistyring",
+                    "Utgiver": "986252932 | Direktoratet for forvaltning og økonomistyring",
                     "Dokumentasjon": null,
                     "DataeierEpost": "myemail@email.com",
                     "Geografisk avgrensning": null,
@@ -574,22 +574,22 @@
                     "TidsmessigAvgrensetFra": 1640991600000,
                     "GeografiskAvgrensning": "https://data.geonorge.no/administrativeEnheter/nasjon/id/173163 | Norge",
                     "Type": "DATA | Datasett",
-                    "Tilgangsnivå": "http://publications.europa.eu/resource/authority/access-right/PUBLIC | Allmenn tilgang",
+                    "Tilgangsnivå": "PUBLIC | Allmenn tilgang",
                     "PubliseresPåFellesDatakatalog": "Ja",
                     "Tidsmessig avgrenset fra": 0,
-                    "Oppdateringsfrekvens": "http://publications.europa.eu/resource/authority/frequency/MONTHLY | Månedlig",
+                    "Oppdateringsfrekvens": "MONTHLY | Månedlig",
                     "Tidsmessig avgrenset til": 0,
                     "Dataeier": "Contact X"
                 }
             },
             "glossaryTermHeader": {
                 "termGuid": "0ae16586-ddbd-463a-bac3-ecc57f33e4d3",
-                "qualifiedName": "kunngjoringer@Glossary"
+                "qualifiedName": "kunngjoringer@myglossary"
             }
         },
         "c5105ba7-6ac0-4246-9a55-29a46bf15ae7": {
             "guid": "c5105ba7-6ac0-4246-9a55-29a46bf15ae7",
-            "qualifiedName": "kunngjoringer-csv@Glossary",
+            "qualifiedName": "kunngjoringer-csv@myglossary",
             "name": "kunngjoringer-csv",
             "longDescription": "CSV-fil med kunngjøringer om offentlige anskaffelser.",
             "lastModifiedTS": "9",
@@ -614,7 +614,7 @@
                     "TilgangsUrl": "https://anskaffelser.no",
                     "Utgiver": "https://organization-catalog.fellesdatakatalog.digdir.no/organizations/986252932 | Direktoratet for forvaltning og økonomistyring",
                     "Tilgangs-URL": null,
-                    "Format": "http://publications.europa.eu/resource/authority/file-type/CSV | CSV",
+                    "Format": "http://invalid.format.url^/resource/authority/file-type/CSV | CSV",
                     "Lisens": "http://publications.europa.eu/resource/authority/licence/NLOD_2_0 | Norsk lisens for offentlige data (NLOD)",
                     "Nedlastningslenke": "https://anskaffelser.no",
                     "Tittel": "CSV-fil om offentlig anskaffelser",
@@ -623,12 +623,12 @@
             },
             "glossaryTermHeader": {
                 "termGuid": "c5105ba7-6ac0-4246-9a55-29a46bf15ae7",
-                "qualifiedName": "kunngjoringer-csv@Glossary"
+                "qualifiedName": "kunngjoringer-csv@myglossary"
             }
         },
         "045ac00a-f59c-4734-8962-d90421ce38bb": {
             "guid": "045ac00a-f59c-4734-8962-d90421ce38bb",
-            "qualifiedName": "kunngjoringer-informasjonsmodell@Glossary",
+            "qualifiedName": "kunngjoringer-informasjonsmodell@myglossary",
             "name": "kunngjoringer-informasjonsmodell",
             "longDescription": "Beskrivelse av datamodellen til kunngjøringer.",
             "lastModifiedTS": "3",
@@ -678,13 +678,13 @@
             ],
             "attributes": {
                 "Informasjonsmodell": {
-                    "Utgiver": "https://organization-catalog.fellesdatakatalog.digdir.no/organizations/986252932 | Direktoratet for forvaltning og økonomistyring",
+                    "Utgiver": "986252932 | Direktoratet for forvaltning og økonomistyring",
                     "Tittel": "Informasjonsmodell - Kunngjøringer"
                 }
             },
             "glossaryTermHeader": {
                 "termGuid": "045ac00a-f59c-4734-8962-d90421ce38bb",
-                "qualifiedName": "kunngjoringer-informasjonsmodell@Glossary"
+                "qualifiedName": "kunngjoringer-informasjonsmodell@myglossary"
             }
         }
     }

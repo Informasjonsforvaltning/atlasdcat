@@ -1,0 +1,27 @@
+{
+    "guid": "24656c6d-0479-43b3-9bda-c1c93ab09010",
+    "qualifiedName": "dataset1@myglossary",
+    "name": "dataset1",
+    "longDescription": "Dataset 1 description",
+    "anchor": {
+        "glossaryGuid": "myglossary",
+        "relationGuid": "4f98e85a-73f8-4548-80fe-30799888a0e6"
+    },
+    "attributes": {
+		"Datasett": {
+			"Dataeier": "",
+			"DataeierEpost": "",
+			"Emneord": "",
+			"GeografiskAvgrensning": "",
+			"Lisens": "",
+			"Oppdateringsfrekvens": "",
+			"Tema": "",
+			"Tilgangsnivå": "",
+			"Tittel": "Dataset 1",
+			"Utgiver": "",
+			"spatialResolutionInMeters": "",
+			"temporalEndDate": "",
+			"temporalStartDate": ""
+		}
+	}
+}
