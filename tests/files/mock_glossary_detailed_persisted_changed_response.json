@@ -1,0 +1,139 @@
+{
+    "guid": "ef38fdb9-bbd5-4c5e-92fd-30bebc07a3f1",
+    "qualifiedName": "myglossary",
+    "name": "myglossary",
+    "terms": [
+        {
+            "termGuid": "24656c6d-0479-43b3-9bda-c1c93ab09010",
+            "relationGuid": "b690ea08-c6fe-417b-8861-e7894e5a3b24",
+            "displayText": "dataset1"
+        },
+        {
+            "termGuid": "0c664b16-f140-4195-86be-6c6145cfb017",
+            "relationGuid": "b690ea08-c6fe-417b-8861-e7894e5a3b24",
+            "displayText": "dataset2"
+        },
+        {
+            "termGuid": "7fc8dbe4-0706-4da2-80b8-d0f6dab8f3ec",
+            "relationGuid": "b690ea08-c6fe-417b-8861-e7894e5a3b24",
+            "displayText": "distribution1"
+        },
+        {
+            "termGuid": "2c9fc2b5-6baf-4c53-beaf-317f94e66ed9",
+            "relationGuid": "b690ea08-c6fe-417b-8861-e7894e5a3b24",
+            "displayText": "distribution2"
+        }
+    ],
+    "termInfo": {
+        "24656c6d-0479-43b3-9bda-c1c93ab09010": {
+            "guid": "24656c6d-0479-43b3-9bda-c1c93ab09010",
+            "qualifiedName": "dataset1@myglossary",
+            "name": "dataset1",
+            "longDescription": "Dataset 1 with new description",
+            "anchor": {
+                "glossaryGuid": "myglossary",
+                "relationGuid": "4f98e85a-73f8-4548-80fe-30799888a0e6"
+            },
+            "attributes": {
+                "Datasett": {
+                    "Dataeier": "",
+			        "DataeierEpost": "",
+                    "Emneord": "",
+                    "GeografiskAvgrensning": "",
+                    "Lisens": "",
+                    "Oppdateringsfrekvens": "",
+                    "Tema": "",
+                    "Tilgangsnivå": "",
+                    "Tittel": "Dataset 1 with new title",
+                    "Utgiver": "",
+                    "spatialResolutionInMeters": "",
+                    "temporalEndDate": "",
+                    "temporalStartDate": ""
+                }
+            },
+            "seeAlso": [{
+              "termGuid": "7fc8dbe4-0706-4da2-80b8-d0f6dab8f3ec",
+              "displayText": "distribution1"
+           }]
+        },
+        "0c664b16-f140-4195-86be-6c6145cfb017": {
+            "guid": "0c664b16-f140-4195-86be-6c6145cfb017",
+            "qualifiedName": "dataset2@myglossary",
+            "name": "dataset2",
+            "longDescription": "Dataset 2 description",
+            "anchor": {
+                "glossaryGuid": "myglossary",
+                "relationGuid": "4f98e85a-73f8-4548-80fe-30799888a0e6"
+            },
+            "attributes": {
+                "Datasett": {
+                    "Dataeier": "",
+			        "DataeierEpost": "",
+                    "Emneord": "",
+                    "GeografiskAvgrensning": "",
+                    "Lisens": "",
+                    "Oppdateringsfrekvens": "",
+                    "Tema": "",
+                    "Tilgangsnivå": "",
+                    "Tittel": "Dataset 1",
+                    "Utgiver": "",
+                    "spatialResolutionInMeters": "",
+                    "temporalEndDate": "",
+                    "temporalStartDate": ""
+                }
+            },
+            "seeAlso": [{
+              "termGuid": "2c9fc2b5-6baf-4c53-beaf-317f94e66ed9",
+              "displayText": "distribution2"
+           }]
+        },
+        "7fc8dbe4-0706-4da2-80b8-d0f6dab8f3ec": {
+            "guid": "7fc8dbe4-0706-4da2-80b8-d0f6dab8f3ec",
+            "anchor": {
+                "glossaryGuid": "myglossary",
+                "relationGuid": "4f98e85a-73f8-4548-80fe-30799888a0e6"
+            },
+            "attributes":{
+              "Distribusjon":{
+                 "Format": "",
+                 "Lisens": "",
+                 "Nedlastningslenke": "",
+                 "TilgangsUrl": "",
+                 "Tittel": "Distribution 1 with new title",
+                 "temporalResolution": ""
+              }
+           },
+           "longDescription": "Distribution 1 with new description",
+           "name": "distribution1",
+           "qualifiedName": "distribution1@myglossary",
+           "seeAlso": [{
+              "termGuid": "24656c6d-0479-43b3-9bda-c1c93ab09010",
+              "displayText": "dataset1"
+           }]
+        },
+        "2c9fc2b5-6baf-4c53-beaf-317f94e66ed9": {
+            "guid": "2c9fc2b5-6baf-4c53-beaf-317f94e66ed9",
+            "qualifiedName": "distribution2@myglossary",
+            "name": "distribution2",
+            "longDescription": "Distribution 2 description",
+            "anchor": {
+                "glossaryGuid": "myglossary",
+                "relationGuid": "4f98e85a-73f8-4548-80fe-30799888a0e6"
+            },
+            "attributes":{
+                "Distribusjon":{
+                    "Format": "",
+                    "Lisens": "",
+                    "Nedlastningslenke": "",
+                    "TilgangsUrl": "",
+                    "Tittel": "Distribution 2",
+                    "temporalResolution": ""
+                }
+           },
+           "seeAlso": [{
+              "termGuid": "0c664b16-f140-4195-86be-6c6145cfb017",
+              "displayText": "dataset2"
+           }]
+        }
+    }
+}

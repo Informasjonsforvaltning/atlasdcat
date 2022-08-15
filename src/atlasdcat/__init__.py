@@ -10,4 +10,12 @@ except PackageNotFoundError:  # pragma: no cover
     __version__ = "unknown"
 
 from .attribute import Attribute
-from .mapper import AtlasDcatMapper, FormatError, TemporalError
+from .glossaryclient import AtlasGlossaryClient
+from .mapper import (
+    AtlasDcatMapper,
+    FormatError,
+    InvalidStateError,
+    MappingError,
+    TemporalError,
+)
+from .termtype import TermType

@@ -1,0 +1,22 @@
+{
+   "anchor":{
+      "glossaryGuid": "myglossary"
+   },
+   "attributes":{
+      "Distribusjon":{
+         "Format": "",
+         "Lisens": "",
+         "Nedlastningslenke": "",
+         "TilgangsUrl": "",
+         "Tittel": "Distribution 2",
+         "temporalResolution": ""
+      }
+   },
+   "longDescription": "Distribution 2 description",
+   "name": "distribution2",
+   "qualifiedName": "distribution2@myglossary",
+   "seeAlso": [{
+      "termGuid": "0c664b16-f140-4195-86be-6c6145cfb017",
+      "displayText": "dataset2"
+   }]
+}

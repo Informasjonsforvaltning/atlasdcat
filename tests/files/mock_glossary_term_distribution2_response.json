@@ -1,0 +1,24 @@
+{
+    "guid": "2c9fc2b5-6baf-4c53-beaf-317f94e66ed9",
+    "qualifiedName": "distribution2@myglossary",
+    "name": "distribution2",
+    "longDescription": "Distribution 2 description",
+    "anchor": {
+        "glossaryGuid": "myglossary",
+        "relationGuid": "4f98e85a-73f8-4548-80fe-30799888a0e6"
+    },
+    "attributes":{
+        "Distribusjon":{
+            "Format": "",
+            "Lisens": "",
+            "Nedlastningslenke": "",
+            "TilgangsUrl": "",
+            "Tittel": "Distribution 2",
+            "temporalResolution": ""
+      }
+    },
+    "seeAlso": [{
+      "termGuid": "0c664b16-f140-4195-86be-6c6145cfb017",
+      "displayText": "dataset2"
+    }]
+}

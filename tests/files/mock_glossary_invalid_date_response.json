@@ -1,7 +1,7 @@
 {
     "guid": "ef38fdb9-bbd5-4c5e-92fd-30bebc07a3f1",
-    "qualifiedName": "Glossary",
-    "name": "Glossary",
+    "qualifiedName": "myglossary",
+    "name": "myglossary",
     "terms": [
         {
             "termGuid": "b87714c2-31a7-4249-8b94-fa5990eae45c",
@@ -12,7 +12,7 @@
     "termInfo": {
         "b87714c2-31a7-4249-8b94-fa5990eae45c": {
             "guid": "b87714c2-31a7-4249-8b94-fa5990eae45c",
-            "qualifiedName": "cpv@Glossary",
+            "qualifiedName": "cpv@myglossary",
             "name": "cpv",
             "longDescription": "Formålet med CPV er å standardisere betegnelsene som oppdragsgiverne bruker til å beskrive gjenstanden i kontrakter. Ved å gruppere anskaffelser etter ulike CPV numre, blir det enklere for leverandørene å søke etter relevante kunngjøringer i databasene. Et sentralt hensyn bak systemet er at en tilbyder med et helt annet morsmål skal kunne skjønne hva oppdragsgiveren er ute etter.",
             "lastModifiedTS": "5",
@@ -62,7 +62,7 @@
             },
             "glossaryTermHeader": {
                 "termGuid": "b87714c2-31a7-4249-8b94-fa5990eae45c",
-                "qualifiedName": "cpv@Glossary"
+                "qualifiedName": "cpv@myglossary"
             }
         }
     }
