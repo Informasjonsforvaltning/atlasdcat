@@ -28,7 +28,7 @@ run this command in your terminal:
 Usage
 -----
 
-Map Apache Atlas Glossary terms to DCAT RDF (turtle):
+Setup Atlas DCAT Mapper:
 
 .. code-block::
 
@@ -53,7 +53,23 @@ Map Apache Atlas Glossary terms to DCAT RDF (turtle):
         language="nb",
     )
 
+Map Apache Atlas Glossary terms to DCAT RDF (turtle):
+
+.. code-block::
+
     try:
+        mapper.fetch_glossary()
+        catalog = mapper.map_glossary_to_dcat_dataset_catalog()
+        print(catalog.to_rdf())
+    except Exception as e:
+        print(f"An exception occurred: {e}")
+
+Map DCAT RDF Catalog to Apache Atlas Glossary terms:
+
+.. code-block::
+
+    try:
+        mapper.fetch_glossary()
         catalog = mapper.map_glossary_to_dcat_dataset_catalog()
         print(catalog.to_rdf())
     except Exception as e:

@@ -43,6 +43,7 @@ mapper = AtlasDcatMapper(
 )
 
 try:
+    mapper.fetch_glossary()
     catalog = mapper.map_glossary_to_dcat_dataset_catalog()
     print(catalog.to_rdf())
 except Exception as e:
