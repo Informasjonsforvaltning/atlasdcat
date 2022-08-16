@@ -670,7 +670,6 @@ def test_map_dataset_catalog_to_glossary_terms(
     mapper.fetch_glossary()
     mapper.map_dataset_catalog_to_glossary_terms(catalog)
     mapper.save_glossary_terms()
-    mapper.fetch_glossary()
 
     terms = mapper.glossary_terms
 
@@ -900,8 +899,6 @@ def test_map_dataset_catalog_to_existing_glossary_terms(
     assert len(mapper.tmp_glossary_terms) == 2
 
     mapper.save_glossary_terms()
-    mapper.fetch_glossary()
-
     terms = mapper.glossary_terms
 
     assert len(terms) == 4

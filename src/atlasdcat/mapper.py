@@ -964,6 +964,8 @@ class AtlasDcatMapper:
                             distribution_terms[j]
                         )
 
+        self.fetch_glossary()
+
     def map_glossary_terms_to_dataset_catalog(self) -> Catalog:
         """Map glossary terms to dcat dataset catalog RDF resource.
 
