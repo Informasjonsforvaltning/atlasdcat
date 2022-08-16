@@ -11,9 +11,8 @@ from typing import Any
 
 from dotenv import load_dotenv
 from pyapacheatlas.auth import BasicAuthentication, ServicePrincipalAuthentication
-from pyapacheatlas.core.glossary import GlossaryClient
 
-from atlasdcat import AtlasDcatMapper, Attribute
+from atlasdcat import AtlasDcatMapper, AtlasGlossaryClient, Attribute
 
 load_dotenv()
 
@@ -49,7 +48,7 @@ class Handler(BaseHTTPRequestHandler):
                 client_secret=os.getenv("SERVICE_PRINCIPLE_CLIENT_SECRET", ""),
             )
 
-        atlas_client = GlossaryClient(
+        atlas_client = AtlasGlossaryClient(
             endpoint_url=os.getenv("ATLAS_ENDPOINT_URL", ""), authentication=auth
         )
 
@@ -87,6 +86,7 @@ class Handler(BaseHTTPRequestHandler):
         )
 
         try:
+            mapper.fetch_glossary()
             catalog = mapper.map_glossary_to_dcat_dataset_catalog()
             print(catalog)
 
