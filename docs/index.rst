@@ -5,9 +5,10 @@ Apache Atlas DCAT library
    :hidden:
    :maxdepth: 1
 
-   example
+   modules
+   atlasdcat
+   example.md
    license
-   reference
 
 A Python library for mapping `Apache Atlas <https://atlas.apache.org/>`_ Glossary terms to DCAT metadata and vice versa.
 
@@ -32,12 +33,11 @@ Setup Atlas DCAT Mapper:
 
 .. code-block::
 
-    from atlasdcat import AtlasDcatMapper
+    from atlasdcat import AtlasDcatMapper, AtlasGlossaryClient
     from pyapacheatlas.auth import BasicAuthentication
-    from pyapacheatlas.core.glossary import GlossaryClient
 
     atlas_auth = BasicAuthentication(username="dummy", password="dummy")
-    atlas_client = GlossaryClient(
+    atlas_client = AtlasGlossaryClient(
         endpoint_url="http://atlas", authentication=atlas_auth
     )
 
@@ -68,12 +68,24 @@ Map DCAT RDF Catalog to Apache Atlas Glossary terms:
 
 .. code-block::
 
+    catalog = Catalog()
+    catalog.identifier = "http://catalog-uri"
+    catalog.title = {"nb": "mytitle"}
+    catalog.publisher = "http://publisher"
+    catalog.language = ["nb"]
+    catalog.license = ""
+
+    dataset = Dataset()
+    dataset.title = {"nb": "Dataset"}
+    dataset.description = {"nb": "Dataset description"}
+    catalog.datasets = [dataset]
+
     try:
         mapper.fetch_glossary()
-        catalog = mapper.map_glossary_to_dcat_dataset_catalog()
-        print(catalog.to_rdf())
+        mapper.map_dataset_catalog_to_glossary_terms(catalog)
+        mapper.save_glossary_terms()
     except Exception as e:
         print(f"An exception occurred: {e}")
 
 
-For an example of usage of this library in a simple server, see :ref:`example`.
+For an example of usage of this library in a simple server, see :doc:`example` .

@@ -90,11 +90,11 @@ def xdoctest(session: Session) -> None:
     session.run("python", "-m", "xdoctest", package, *args)
 
 
-@session(python=["3.8", "3.9", "3.10"])
+@session(python=["3.8"])
 def docs(session: Session) -> None:
     """Build the documentation."""
     session.run("poetry", "install", "--no-dev", external=True)
-    session.install("sphinx", "sphinx_autodoc_typehints")
+    session.install("sphinx", "sphinx_autodoc_typehints", "myst_parser")
     session.run("sphinx-build", "docs", "docs/_build")
 
 

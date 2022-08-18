@@ -168,7 +168,7 @@ rdflib = ">=6.0.0,<7.0.0"
 
 [[package]]
 name = "coverage"
-version = "6.4.3"
+version = "6.4.4"
 description = "Code coverage measurement for Python"
 category = "dev"
 optional = false
