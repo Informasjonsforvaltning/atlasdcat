@@ -1091,7 +1091,45 @@ def test_attributes_atlas_vs_purview() -> None:
         distribution_uri_template="http://data.norge.no/distributions/{guid}",
         language="nb",
     )
-    assert {"Dataset": {}} == atlas_mapper._init_term_attributes({}, TermType.DATASET)
+    dataset_term = {}
+    assert {} == atlas_mapper._init_term_attributes(dataset_term, TermType.DATASET)
+    atlas_mapper._set_attribute_values(
+        dataset_term, TermType.DATASET, Attribute.TITLE, "title"
+    )
+    atlas_mapper._set_attribute_values(
+        dataset_term,
+        TermType.DATASET,
+        Attribute.THEME,
+        "https://theme1 | theme1;https://theme2 | theme2",
+    )
+    assert {
+        "additionalAttributes": {
+            "Dataset_title": "title",
+            "Dataset_theme": "https://theme1 | theme1;https://theme2 | theme2",
+        }
+    } == dataset_term
+    assert ["title"] == atlas_mapper._get_attribute_values(
+        dataset_term, TermType.DATASET, Attribute.TITLE
+    )
+    assert ["https://theme1", "https://theme2"] == atlas_mapper._get_attribute_values(
+        dataset_term, TermType.DATASET, Attribute.THEME, True
+    )
+    assert TermType.DATASET == atlas_mapper._get_term_type(dataset_term)
+
+    distribution_term = {}
+    assert {} == atlas_mapper._init_term_attributes(
+        distribution_term, TermType.DISTRIBUTION
+    )
+    atlas_mapper._set_attribute_values(
+        distribution_term, TermType.DISTRIBUTION, Attribute.TITLE, "title"
+    )
+    assert {
+        "additionalAttributes": {"Distribution_title": "title"}
+    } == distribution_term
+    assert ["title"] == atlas_mapper._get_attribute_values(
+        distribution_term, TermType.DISTRIBUTION, Attribute.TITLE
+    )
+    assert TermType.DISTRIBUTION == atlas_mapper._get_term_type(distribution_term)
 
     purview_mapper = AtlasDcatMapper(
         is_purview=True,
@@ -1105,7 +1143,47 @@ def test_attributes_atlas_vs_purview() -> None:
         distribution_uri_template="http://data.norge.no/distributions/{guid}",
         language="nb",
     )
-    assert {"Dataset": {}} == purview_mapper._init_term_attributes({}, TermType.DATASET)
+    dataset_term = {}
+    assert {"Dataset": {}} == purview_mapper._init_term_attributes(
+        dataset_term, TermType.DATASET
+    )
+    purview_mapper._set_attribute_values(
+        dataset_term, TermType.DATASET, Attribute.TITLE, "title"
+    )
+    purview_mapper._set_attribute_values(
+        dataset_term,
+        TermType.DATASET,
+        Attribute.THEME,
+        "https://theme1 | theme1;https://theme2 | theme2",
+    )
+    assert {
+        "attributes": {
+            "Dataset": {
+                "title": "title",
+                "theme": "https://theme1 | theme1;https://theme2 | theme2",
+            }
+        }
+    } == dataset_term
+    assert ["title"] == purview_mapper._get_attribute_values(
+        dataset_term, TermType.DATASET, Attribute.TITLE
+    )
+    assert ["https://theme1", "https://theme2"] == purview_mapper._get_attribute_values(
+        dataset_term, TermType.DATASET, Attribute.THEME, True
+    )
+    assert TermType.DATASET == purview_mapper._get_term_type(dataset_term)
+
+    distribution_term = {}
+    assert {"Distribution": {}} == purview_mapper._init_term_attributes(
+        distribution_term, TermType.DISTRIBUTION
+    )
+    purview_mapper._set_attribute_values(
+        distribution_term, TermType.DISTRIBUTION, Attribute.TITLE, "title"
+    )
+    assert {"attributes": {"Distribution": {"title": "title"}}} == distribution_term
+    assert ["title"] == purview_mapper._get_attribute_values(
+        distribution_term, TermType.DISTRIBUTION, Attribute.TITLE
+    )
+    assert TermType.DISTRIBUTION == purview_mapper._get_term_type(distribution_term)
 
 
 def test_invalid_attributes() -> None:

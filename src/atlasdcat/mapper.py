@@ -5,6 +5,7 @@ according to the
 `dcat-ap-no v.2 standard <https://data.norge.no/specification/dcat-ap-no>`__
 
 Example:
+    Setup the AtlasDcatMapper.
     >>> from atlasdcat import AtlasDcatMapper, AtlasGlossaryClient
     >>> from pyapacheatlas.auth import BasicAuthentication
     >>>
@@ -24,13 +25,34 @@ Example:
     >>>     distribution_uri_template="http://domain/distributions/{guid}",
     >>>     language="nb",
     >>> )
-    >>>
+
+    Map glossary terms to DCAT Catalog
     >>> try:
     >>>     mapper.fetch_glossary()
     >>>     catalog = mapper.map_glossary_to_dcat_dataset_catalog()
     >>>     print(catalog.to_rdf())
     >>> except Exception as e:
     >>>     print(f"An exception occurred: {e}")
+
+    >>> catalog = Catalog()
+    >>> catalog.identifier = "http://catalog-uri"
+    >>> catalog.title = {"nb": "mytitle"}
+    >>> catalog.publisher = "http://publisher"
+    >>> catalog.language = ["nb"]
+    >>> catalog.license = ""
+
+    >>> dataset = Dataset()
+    >>> dataset.title = {"nb": "Dataset"}
+    >>> dataset.description = {"nb": "Dataset description"}
+    >>> catalog.datasets = [dataset]
+    >>>
+    >>> try:
+    >>>  6+
+     mapper.fetch_glossary()
+            mapper.map_dataset_catalog_to_glossary_terms(catalog)
+            mapper.save_glossary_terms()
+        except Exception as e:
+            print(f"An exception occurred: {e}")
 """
 from typing import Any, Dict, List, Optional
 import uuid
@@ -310,11 +332,10 @@ class AtlasDcatMapper:
 
         if self._is_purview:
             term["attributes"] = {type_attribute_name: {}}
+            return term["attributes"]
         else:
-            term["additionalAttributes"] = {type_attribute_name: {}}
-
-        attributes = self._get_term_attributes(term)
-        return attributes or {}
+            term["additionalAttributes"] = {}
+            return term["additionalAttributes"]
 
     def _get_attribute_name(self, attr: Attribute) -> str:
         """Return the name of the attribute based on a possible attribute mapping.
@@ -338,10 +359,21 @@ class AtlasDcatMapper:
         """
         attributes = self._get_term_attributes(term)
         if attributes is not None:
-            if self._get_attribute_name(Attribute.DATASET) in attributes:
-                return TermType.DATASET
-            if self._get_attribute_name(Attribute.DISTRIBUTION) in attributes:
-                return TermType.DISTRIBUTION
+            if self._is_purview:
+                if self._get_attribute_name(Attribute.DATASET) in attributes:
+                    return TermType.DATASET
+                if self._get_attribute_name(Attribute.DISTRIBUTION) in attributes:
+                    return TermType.DISTRIBUTION
+            else:
+                for (name, _) in attributes.items():
+                    if name.startswith(
+                        self._get_attribute_name(Attribute.DATASET) + "_"
+                    ):
+                        return TermType.DATASET
+                    if name.startswith(
+                        self._get_attribute_name(Attribute.DISTRIBUTION) + "_"
+                    ):
+                        return TermType.DISTRIBUTION
 
         return TermType.UNKNOWN
 
@@ -357,7 +389,7 @@ class AtlasDcatMapper:
         """
         return self._get_first_attribute_value(
             term, term_type, Attribute.INCLUDE_IN_DCAT, False
-        ).lower() in ["ja", "j", "yes", "y", "true"]
+        ).lower() not in ["nei", "n", "no", "false"]
 
     def _get_attribute_values(
         self,
@@ -386,11 +418,25 @@ class AtlasDcatMapper:
             raise MappingError("Term attributes is undefined")
 
         type_attribute = _convert_term_type_to_attribute(term_type)
-        type_attributes: Optional[Any] = attributes.get(
-            self._get_attribute_name(type_attribute)
-        )
-        if type_attributes is not None:
-            value = type_attributes.get(self._get_attribute_name(attr))
+
+        if self._is_purview:
+            type_attributes: Optional[Any] = attributes.get(
+                self._get_attribute_name(type_attribute)
+            )
+
+            if type_attributes is not None:
+                value = type_attributes.get(self._get_attribute_name(attr))
+                if value is not None:
+                    if parse_value and value is not None:
+                        return _parse_value(value)
+                    else:
+                        return [value]
+        else:
+            attribute_name = "{prefix}_{name}".format(
+                prefix=self._get_attribute_name(type_attribute),
+                name=self._get_attribute_name(attr),
+            )
+            value = attributes.get(attribute_name)
             if value is not None:
                 if parse_value and value is not None:
                     return _parse_value(value)
@@ -417,11 +463,19 @@ class AtlasDcatMapper:
             attributes = self._init_term_attributes(term, term_type)
 
         type_attribute = _convert_term_type_to_attribute(term_type)
-        type_attributes: Optional[Any] = attributes.get(
-            self._get_attribute_name(type_attribute)
-        )
-        if type_attributes is not None:
-            type_attributes[self._get_attribute_name(attr)] = values
+
+        if self._is_purview:
+            type_attributes: Optional[Any] = attributes.get(
+                self._get_attribute_name(type_attribute)
+            )
+            if type_attributes is not None:
+                type_attributes[self._get_attribute_name(attr)] = values
+        else:
+            attribute_name = "{prefix}_{name}".format(
+                prefix=self._get_attribute_name(type_attribute),
+                name=self._get_attribute_name(attr),
+            )
+            attributes[attribute_name] = values
 
     def _get_first_attribute_value(
         self,
