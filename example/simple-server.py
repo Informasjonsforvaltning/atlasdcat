@@ -9,6 +9,7 @@ import logging
 import os
 from typing import Any
 
+from datacatalogtordf import Catalog, Dataset
 from dotenv import load_dotenv
 from pyapacheatlas.auth import BasicAuthentication, ServicePrincipalAuthentication
 
@@ -30,18 +31,13 @@ class Handler(BaseHTTPRequestHandler):
         self.send_header("Content-type", "text/html")
         self.end_headers()
 
-    def do_GET(self) -> None:
-        """Handle GET requests."""
-        logging.info(
-            "GET request, Path: %s Headers:%s", str(self.path), str(self.headers)
-        )
-
+    def _create_mapper(self):
         auth = BasicAuthentication(
             username=os.getenv("BASIC_AUTH_USERNAME", ""),
             password=os.getenv("BASIC_AUTH_PASSWORD", ""),
         )
 
-        if os.getenv("SERVICE_PRINCIPLE_TENANT_ID") != "":
+        if os.getenv("SERVICE_PRINCIPLE_TENANT_ID", "") != "":
             auth = ServicePrincipalAuthentication(
                 tenant_id=os.getenv("SERVICE_PRINCIPLE_TENANT_ID", ""),
                 client_id=os.getenv("SERVICE_PRINCIPLE_CLIENT_ID", ""),
@@ -54,8 +50,9 @@ class Handler(BaseHTTPRequestHandler):
 
         mapper = AtlasDcatMapper(
             glossary_client=atlas_client,
-            glossary_id="ef38fdb9-bbd5-4c5e-92fd-30bebc07a3f1",
+            glossary_id=os.getenv("GLOSSARY_ID", ""),
             catalog_uri="https://domain/catalog",
+            catalog_language="http://publications.europa.eu/resource/authority/language/NOB",
             catalog_title="Catalog",
             catalog_publisher="https://domain/publisher",
             dataset_uri_template="http://domain/datasets/{guid}",
@@ -85,9 +82,18 @@ class Handler(BaseHTTPRequestHandler):
             },
         )
 
+        return mapper
+
+    def do_GET(self) -> None:
+        """Handle GET requests."""
+        logging.info(
+            "GET request, Path: %s Headers:%s", str(self.path), str(self.headers)
+        )
+
+        mapper = self._create_mapper()
         try:
             mapper.fetch_glossary()
-            catalog = mapper.map_glossary_to_dcat_dataset_catalog()
+            catalog = mapper.map_glossary_terms_to_dataset_catalog()
             print(catalog)
 
             self._set_ok_response()
@@ -95,6 +101,33 @@ class Handler(BaseHTTPRequestHandler):
         except Exception as e:
             self._set_error_response()
             self.wfile.write(f"An error occurred: {e}".encode("utf-8"))
+
+    def do_POST(self) -> None:
+        """Handle GET requests."""
+        logging.info(
+            "GET request, Path: %s Headers:%s", str(self.path), str(self.headers)
+        )
+
+        mapper = self._create_mapper()
+
+        catalog = Catalog()
+        catalog.identifier = "http://catalog-uri"
+        catalog.title = {"nb": "mytitle"}
+        catalog.publisher = "http://publisher"
+        catalog.language = ["nb"]
+        catalog.license = ""
+
+        dataset = Dataset()
+        dataset.title = {"nb": "Dataset"}
+        dataset.description = {"nb": "Dataset description"}
+        catalog.datasets = [dataset]
+
+        try:
+            mapper.fetch_glossary()
+            mapper.map_dataset_catalog_to_glossary_terms(catalog)
+            mapper.save_glossary_terms()
+        except Exception as e:
+            print(f"An exception occurred: {e}")
 
 
 def run(
