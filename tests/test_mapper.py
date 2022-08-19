@@ -206,6 +206,116 @@ def test_map_glossary_terms_to_dataset_catalog(responses: Any) -> None:
     assert catalog.license == ""
 
     # Datasets
+    assert len(catalog.datasets) == 4
+
+    dataset_to_check = catalog.datasets[3]
+    assert dataset_to_check.title == {"nb": "Kunngjøringer av offentlig anskaffelser"}
+    assert dataset_to_check.description == {
+        "nb": "Doffin er den nasjonale kunngjøringsdatabasen for offentlige anskaffelser "
+        "Doffin hjelpe oppdragsgivere med å lage og publisere kunngjøringer i samsvar med "
+        "regelverket, og gjøre det enkelt for leverandører å finne relevante konkurranser "
+        "i offentlig sektor."
+    }
+    assert dataset_to_check.contactpoint.name == {"nb": "Contact X"}
+    assert dataset_to_check.contactpoint.email == "myemail@email.com"
+    assert (
+        dataset_to_check.spatial[0].identifier
+        == "https://data.geonorge.no/administrativeEnheter/nasjon/id/173163"
+    )
+    assert (
+        dataset_to_check.access_rights
+        == "http://publications.europa.eu/resource/authority/access-right/PUBLIC"
+    )
+    assert (
+        dataset_to_check.frequency
+        == "http://publications.europa.eu/resource/authority/frequency/MONTHLY"
+    )
+    assert (
+        dataset_to_check.publisher
+        == "https://organization-catalog.fellesdatakatalog.digdir.no/organizations/986252932"
+    )
+    assert dataset_to_check.theme == [
+        "https://psi.norge.no/los/ord/offentlig-innkjop",
+        "http://publications.europa.eu/resource/authority/data-theme/GOVE",
+    ]
+
+    assert len(dataset_to_check.distributions) > 0
+    first_distribution = dataset_to_check.distributions[0]
+    assert first_distribution.title == {"nb": "CSV-fil om offentlig anskaffelser"}
+
+    g1 = Graph().parse(data=catalog.to_rdf(), format="turtle")
+    g2 = Graph().parse("tests/files/catalog.ttl", format="turtle")
+
+    _isomorphic = isomorphic(g1, g2)
+    if not _isomorphic:
+        _dump_diff(g1, g2)
+        pass
+    assert _isomorphic
+
+
+def test_map_approved_only_glossary_terms_to_dataset_catalog(responses: Any) -> None:
+    """It returns a RDF dataset catalog."""
+    with open("tests/files/mock_glossary_detailed_response.json", "r") as file:
+        glossary_detailed = json.loads(file.read())
+    responses.add(
+        method=responses.GET,
+        url="http://atlas/glossary/myglossary/detailed",
+        json=glossary_detailed,
+    )
+
+    atlas_auth = BasicAuthentication(username="", password="")  # noqa: S106
+    atlas_client = AtlasGlossaryClient(
+        endpoint_url="http://atlas", authentication=atlas_auth
+    )
+
+    mapper = AtlasDcatMapper(
+        glossary_client=atlas_client,
+        glossary_id="myglossary",
+        is_purview=True,
+        include_approved_only=True,
+        catalog_uri="https://data.norge.no/catalog/1",
+        catalog_language="http://publications.europa.eu/resource/authority/language/NOB",
+        catalog_title="Catalog",
+        catalog_publisher="https://organization-catalog.fellesdatakatalog.digdir.no/organizations/123456789",
+        dataset_uri_template="http://data.norge.no/datasets/{guid}",
+        distribution_uri_template="http://data.norge.no/distributions/{guid}",
+        language="nb",
+        attr_mapping={
+            Attribute.ACCESS_RIGHTS: "Tilgangsnivå",
+            Attribute.ACCESS_URL: "TilgangsUrl",
+            Attribute.CONTACT_EMAIL: "DataeierEpost",
+            Attribute.CONTACT_NAME: "Dataeier",
+            Attribute.DATASET: "Datasett",
+            Attribute.DISTRIBUTION: "Distribusjon",
+            Attribute.DOWNLOAD_URL: "Nedlastningslenke",
+            Attribute.FORMAT: "Format",
+            Attribute.FREQUENCY: "Oppdateringsfrekvens",
+            Attribute.INCLUDE_IN_DCAT: "PubliseresPåFellesDatakatalog",
+            Attribute.KEYWORD: "Emneord",
+            Attribute.LICENSE: "Lisens",
+            Attribute.PUBLISHER: "Utgiver",
+            Attribute.SPATIAL: "GeografiskAvgrensning",
+            Attribute.THEME: "Tema",
+            Attribute.TITLE: "Tittel",
+        },
+    )
+
+    mapper.fetch_glossary()
+    catalog = mapper.map_glossary_terms_to_dataset_catalog()
+
+    # Catalog properties
+    assert catalog.identifier == "https://data.norge.no/catalog/1"
+    assert catalog.title == {"nb": "Catalog"}
+    assert (
+        catalog.publisher
+        == "https://organization-catalog.fellesdatakatalog.digdir.no/organizations/123456789"
+    )
+    assert catalog.language == [
+        "http://publications.europa.eu/resource/authority/language/NOB"
+    ]
+    assert catalog.license == ""
+
+    # Datasets
     assert len(catalog.datasets) == 3
 
     dataset_to_check = catalog.datasets[2]
@@ -244,7 +354,7 @@ def test_map_glossary_terms_to_dataset_catalog(responses: Any) -> None:
     assert first_distribution.title == {"nb": "CSV-fil om offentlig anskaffelser"}
 
     g1 = Graph().parse(data=catalog.to_rdf(), format="turtle")
-    g2 = Graph().parse("tests/files/catalog.ttl", format="turtle")
+    g2 = Graph().parse("tests/files/catalog_approved.ttl", format="turtle")
 
     _isomorphic = isomorphic(g1, g2)
     if not _isomorphic:

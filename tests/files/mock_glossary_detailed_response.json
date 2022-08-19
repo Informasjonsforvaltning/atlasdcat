@@ -179,7 +179,7 @@
                     "Tema": "http://publications.europa.eu/resource/authority/data-theme/GOVE | Forvaltning og offentlig sektor",
                     "Utgiver": "https://organization-catalog.fellesdatakatalog.digdir.no/organizations/971526920 | Statistisk sentralbyrå",
                     "Dokumentasjon": "https://data.brreg.no/enhetsregisteret/api/docs/index.html",
-                    "DataeierEpost": "martin.standley@dfo.no",
+                    "DataeierEpost": "johndoe@email.com",
                     "Geografisk avgrensning": null,
                     "Emneord": null,
                     "Tittel": "Kommuneinndeling",
@@ -187,11 +187,11 @@
                     "GeografiskAvgrensning": "https://data.geonorge.no/administrativeEnheter/nasjon/id/173163 | Norge",
                     "Type": "CODE_LIST | Kodelister",
                     "Tilgangsnivå": "http://publications.europa.eu/resource/authority/access-right/PUBLIC | Allmenn tilgang",
-                    "PubliseresPåFellesDatakatalog": "Nei",
+                    "PubliseresPåFellesDatakatalog": "Ja",
                     "Tidsmessig avgrenset fra": 0,
                     "Oppdateringsfrekvens": null,
                     "Tidsmessig avgrenset til": 0,
-                    "Dataeier": "Martin de Laine Standley"
+                    "Dataeier": "John Doe"
                 }
             },
             "glossaryTermHeader": {
@@ -227,7 +227,7 @@
                     "Tema": "https://psi.norge.no/los/ord/trafikk-og-transport | Trafikk og transport;https://psi.norge.no/los/ord/natur-klima-og-miljo | Natur klima og miljø",
                     "Utgiver": "https://organization-catalog.fellesdatakatalog.digdir.no/organizations/971032081 | Statens vegvesen",
                     "Dokumentasjon": null,
-                    "DataeierEpost": "martin.standley@dfo.no",
+                    "DataeierEpost": "johndoe@email.com",
                     "Geografisk avgrensning": null,
                     "Emneord": "Kjøretøy;Biler",
                     "Tittel": "Kjøretøyregisteret",
@@ -239,7 +239,7 @@
                     "Tidsmessig avgrenset fra": 0,
                     "Oppdateringsfrekvens": "http://publications.europa.eu/resource/authority/frequency/MONTHLY | Månedlig",
                     "Tidsmessig avgrenset til": 0,
-                    "Dataeier": "Martin de Laine Standley"
+                    "Dataeier": "John Doe"
                 }
             },
             "glossaryTermHeader": {
@@ -268,7 +268,7 @@
                     "Tema": "http://publications.europa.eu/resource/authority/data-theme/GOVE | Forvaltning og offentlig sektor",
                     "Utgiver": "https://organization-catalog.fellesdatakatalog.digdir.no/organizations/974760673 | Brønnøysundregisterne",
                     "Dokumentasjon": null,
-                    "DataeierEpost": "martin.standley@dfo.no",
+                    "DataeierEpost": "johndoe@email.com",
                     "Geografisk avgrensning": null,
                     "Emneord": "Organisasjoner",
                     "Tittel": "Sektorkodeliste (organisasjonsformer)",
@@ -280,7 +280,7 @@
                     "Tidsmessig avgrenset fra": 0,
                     "Oppdateringsfrekvens": "http://publications.europa.eu/resource/authority/frequency/IRREG | Uregelmessig",
                     "Tidsmessig avgrenset til": 0,
-                    "Dataeier": "Martin de Laine Standley"
+                    "Dataeier": "John Doe"
                 }
             },
             "glossaryTermHeader": {
@@ -357,7 +357,7 @@
                     "Tema": "https://psi.norge.no/los/ord/skatt-og-avgift | Skatt og avgift",
                     "Utgiver": "https://organization-catalog.fellesdatakatalog.digdir.no/organizations/986252932 | Direktoratet for forvaltning og økonomistyring",
                     "Dokumentasjon": null,
-                    "DataeierEpost": "Erik.Auset@dfo.no",
+                    "DataeierEpost": "misterx@email.com",
                     "Geografisk avgrensning": null,
                     "Emneord": "Regnskap",
                     "Tittel": "Regnskapsdata",
@@ -369,7 +369,7 @@
                     "Tidsmessig avgrenset fra": 0,
                     "Oppdateringsfrekvens": "http://publications.europa.eu/resource/authority/frequency/ANNUAL | Årlig",
                     "Tidsmessig avgrenset til": 0,
-                    "Dataeier": "Erik Auset"
+                    "Dataeier": "Mister X"
                 }
             },
             "glossaryTermHeader": {
@@ -456,7 +456,7 @@
                     "Tema": "https://psi.norge.no/los/ord/offentlig-innkjop | Offentlige innkjøp",
                     "Utgiver": "https://organization-catalog.fellesdatakatalog.digdir.no/organizations/986252932 | Direktoratet for forvaltning og økonomistyring",
                     "Dokumentasjon": null,
-                    "DataeierEpost": "jonas.karstensen@dfo.no",
+                    "DataeierEpost": "missx@email.com",
                     "Geografisk avgrensning": null,
                     "Emneord": "Anskaffelser",
                     "Tittel": "Konkurransegrunnlag",
@@ -468,7 +468,7 @@
                     "Tidsmessig avgrenset fra": 0,
                     "Oppdateringsfrekvens": "http://publications.europa.eu/resource/authority/frequency/DAILY | Daglig",
                     "Tidsmessig avgrenset til": 0,
-                    "Dataeier": "Jonas Karstensen"
+                    "Dataeier": "Miss X"
                 }
             },
             "glossaryTermHeader": {
@@ -497,7 +497,7 @@
                     "Tema": "https://psi.norge.no/los/ord/natur-klima-og-miljo | Natur klima og miljø",
                     "Utgiver": "https://organization-catalog.fellesdatakatalog.digdir.no/organizations/986252932 | Direktoratet for forvaltning og økonomistyring",
                     "Dokumentasjon": null,
-                    "DataeierEpost": "jonas.karstensen@dfo.no",
+                    "DataeierEpost": "missx@email.com",
                     "Geografisk avgrensning": null,
                     "Emneord": "Anskaffelser",
                     "Tittel": "Utslippsintensiteter",
@@ -509,7 +509,7 @@
                     "Tidsmessig avgrenset fra": 0,
                     "Oppdateringsfrekvens": "http://publications.europa.eu/resource/authority/frequency/IRREG | Uregelmessig",
                     "Tidsmessig avgrenset til": 0,
-                    "Dataeier": "Jonas Karstensen",
+                    "Dataeier": "Miss X",
                     "temporalStartDate": "2020-10-10",
                     "temporalEndDate": "2022-10-10"
                 }

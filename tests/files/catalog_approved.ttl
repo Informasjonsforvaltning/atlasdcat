@@ -8,7 +8,7 @@
   dc:language <http://publications.europa.eu/resource/authority/language/NOB> ;
   dc:publisher <https://organization-catalog.fellesdatakatalog.digdir.no/organizations/123456789> ;
   dc:title "Catalog"@nb ;
-  dcat:dataset <http://data.norge.no/datasets/0ae16586-ddbd-463a-bac3-ecc57f33e4d3>, <http://data.norge.no/datasets/63ce0a90-2b84-4bde-891a-f2cc4f1af12d>, <http://data.norge.no/datasets/b87714c2-31a7-4249-8b94-fa5990eae45c>, <http://data.norge.no/datasets/c52f7edf-98b3-404b-a4d2-e2677fb0572d> .
+  dcat:dataset <http://data.norge.no/datasets/0ae16586-ddbd-463a-bac3-ecc57f33e4d3>, <http://data.norge.no/datasets/b87714c2-31a7-4249-8b94-fa5990eae45c>, <http://data.norge.no/datasets/c52f7edf-98b3-404b-a4d2-e2677fb0572d> .
 
 <http://data.norge.no/datasets/0ae16586-ddbd-463a-bac3-ecc57f33e4d3>
   a dcat:Dataset ;
@@ -26,20 +26,6 @@
   dcat:distribution <http://data.norge.no/distributions/c5105ba7-6ac0-4246-9a55-29a46bf15ae7> ;
   dcat:keyword "Anskaffelser,Innkjøp,Doffin"@nb ;
   dcat:theme <http://publications.europa.eu/resource/authority/data-theme/GOVE>, <https://psi.norge.no/los/ord/offentlig-innkjop> .
-
-<http://data.norge.no/datasets/63ce0a90-2b84-4bde-891a-f2cc4f1af12d>
-  a dcat:Dataset ;
-  dc:accessRights <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
-  dc:description "Informasjon om areal og befolkning i kommuner"@nb ;
-  dc:publisher <https://organization-catalog.fellesdatakatalog.digdir.no/organizations/971526920> ;
-  dc:spatial <https://data.geonorge.no/administrativeEnheter/nasjon/id/173163> ;
-  dc:title "Kommuneinndeling"@nb ;
-  dcat:contactPoint [
-    a vcard:Organization ;
-    vcard:hasEmail <mailto:johndoe@email.com> ;
-    vcard:hasOrganizationName "John Doe"@nb
-  ] ;
-  dcat:theme <http://publications.europa.eu/resource/authority/data-theme/GOVE> .
 
 <http://data.norge.no/datasets/b87714c2-31a7-4249-8b94-fa5990eae45c>
   a dcat:Dataset ;
