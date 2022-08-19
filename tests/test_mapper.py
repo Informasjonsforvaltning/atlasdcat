@@ -981,7 +981,7 @@ def test_attributes_atlas_vs_purview() -> None:
         distribution_uri_template="http://data.norge.no/distributions/{guid}",
         language="nb",
     )
-    dataset_term = {}
+    dataset_term: dict = {}
     assert {} == atlas_mapper._init_term_attributes(dataset_term, TermType.DATASET)
     atlas_mapper._set_attribute_values(
         dataset_term, TermType.DATASET, Attribute.TITLE, "title"
@@ -1006,7 +1006,7 @@ def test_attributes_atlas_vs_purview() -> None:
     )
     assert TermType.DATASET == atlas_mapper._get_term_type(dataset_term)
 
-    distribution_term = {}
+    distribution_term: dict = {}
     assert {} == atlas_mapper._init_term_attributes(
         distribution_term, TermType.DISTRIBUTION
     )
