@@ -43,7 +43,9 @@ mapper = AtlasDcatMapper(
     language="nb",
 )
 ```
+
 #### Map glossary terms to DCAT Catalog RDF resource
+
 ```Python
 try:
     mapper.fetch_glossary()
@@ -52,7 +54,9 @@ try:
 except Exception as e:
     print(f"An exception occurred: {e}")
 ```
+
 #### Map DCAT Catalog RDF resource to glossary terms
+
 ```Python
 catalog = Catalog()
 catalog.identifier = "http://catalog-uri"
