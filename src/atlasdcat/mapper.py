@@ -215,6 +215,7 @@ class AtlasDcatMapper:
         language: str = "nb",
         attr_mapping: Optional[Dict] = None,
         is_purview: Optional[bool] = None,
+        include_approved_only: bool = False,
     ) -> None:
         """Initializes an AtlasDcatMapper.
 
@@ -231,6 +232,8 @@ class AtlasDcatMapper:
             attr_mapping (Optional[Dict]): Attribute mapping.
             is_purview (Optional[bool]): If the glossary endpoint is a Purview
                 instance. Auto-detect by default.
+            include_approved_only: If the mapper should only include terms with
+                status approved (Purview only).
         """
         super().__init__()
 
@@ -247,6 +250,7 @@ class AtlasDcatMapper:
         self._is_purview = (
             is_purview is None and "purview.azure.com" in glossary_client.endpoint_url
         ) or (is_purview is not None and is_purview)
+        self._include_approved_only = include_approved_only and is_purview
         self._glossary: Optional[Dict] = None
         self._tmp_glossary_terms: List = []
 
@@ -987,15 +991,20 @@ class AtlasDcatMapper:
 
         # Separate terms based on type
         for term in self.glossary_terms:
-            term_type = self._get_term_type(term)
-            if term_type == TermType.DATASET and self._include_in_dcat(
-                term, TermType.DATASET
+            if not self._include_approved_only or (
+                self._include_approved_only
+                and term.get("status", "").lower() == "approved"
             ):
-                dataset_terms.append(term)
-            if term_type == TermType.DISTRIBUTION and self._include_in_dcat(
-                term, TermType.DISTRIBUTION
-            ):
-                distribution_terms.append(term)
+                term_type = self._get_term_type(term)
+
+                if term_type == TermType.DATASET and self._include_in_dcat(
+                    term, TermType.DATASET
+                ):
+                    dataset_terms.append(term)
+                if term_type == TermType.DISTRIBUTION and self._include_in_dcat(
+                    term, TermType.DISTRIBUTION
+                ):
+                    distribution_terms.append(term)
 
         # Map terms to datasets
         for term in dataset_terms:
