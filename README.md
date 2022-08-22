@@ -9,6 +9,15 @@ A Python library for mapping [Apache Atlas](https://atlas.apache.org/) Glossary 
 
 Specification [the Norwegian Application Profile](https://data.norge.no/specification/dcat-ap-no) of [the DCAT standard](https://www.w3.org/TR/vocab-dcat-2/).
 
+> **Notice**
+> This library is part of the DCAT for Apache Atlas lifecycle and **not a complete solution**. The complete lifecycle contains the following actions:
+>
+> - Create glossary
+> - Add dataset descriptions by using atlasdcat mapper (this library)
+> - Assign dataset description glossary terms to entities (actual datasets)
+> - Fetch glossary terms as DCAT catalog in RDF format (this library)
+
+
 ## Usage
 
 ### Install
