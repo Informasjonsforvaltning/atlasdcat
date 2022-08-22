@@ -57,9 +57,9 @@ Example:
 from typing import Any, Dict, List, Optional
 import uuid
 
-from concepttordf import Contact
 from datacatalogtordf import (
     Catalog,
+    Contact,
     Dataset,
     Distribution,
     InvalidDateError,
