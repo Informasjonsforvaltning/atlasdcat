@@ -7,7 +7,7 @@ sys.path.insert(0, os.path.abspath("."))
 
 project = "atlasdcat"
 author = "Jeff Reiffers and Stig B. Dørmænen"
-copyright = f"2022, {author}"
+copyright = "2022, Digitaliseringsdirektoratet"
 extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.napoleon",

@@ -9,6 +9,7 @@ import logging
 import os
 from typing import Any
 
+import simplejson
 from datacatalogtordf import Catalog, Dataset
 from dotenv import load_dotenv
 from pyapacheatlas.auth import BasicAuthentication, ServicePrincipalAuthentication
@@ -21,9 +22,9 @@ load_dotenv()
 class Handler(BaseHTTPRequestHandler):
     """Handle requests."""
 
-    def _set_ok_response(self) -> None:
+    def _set_ok_response(self, content_type) -> None:
         self.send_response(200)
-        self.send_header("Content-type", "text/turtle")
+        self.send_header("Content-type", content_type)
         self.end_headers()
 
     def _set_error_response(self) -> None:
@@ -96,38 +97,33 @@ class Handler(BaseHTTPRequestHandler):
             catalog = mapper.map_glossary_terms_to_dataset_catalog()
             print(catalog)
 
-            self._set_ok_response()
+            self._set_ok_response("text/turtle")
             self.wfile.write(catalog.to_rdf())
         except Exception as e:
             self._set_error_response()
             self.wfile.write(f"An error occurred: {e}".encode("utf-8"))
 
     def do_POST(self) -> None:
-        """Handle GET requests."""
+        """Handle POST requests."""
         logging.info(
-            "GET request, Path: %s Headers:%s", str(self.path), str(self.headers)
+            "POST request, Path: %s Headers:%s", str(self.path), str(self.headers)
         )
 
-        mapper = self._create_mapper()
-
-        catalog = Catalog()
-        catalog.identifier = "http://catalog-uri"
-        catalog.title = {"nb": "mytitle"}
-        catalog.publisher = "http://publisher"
-        catalog.language = ["nb"]
-        catalog.license = ""
-
-        dataset = Dataset()
-        dataset.title = {"nb": "Dataset"}
-        dataset.description = {"nb": "Dataset description"}
-        catalog.datasets = [dataset]
+        data_string = self.rfile.read(int(self.headers['Content-Length']))
 
         try:
+            data = simplejson.loads(data_string)
+            catalog = Catalog.from_json(data)
+
+            mapper = self._create_mapper()
             mapper.fetch_glossary()
             mapper.map_dataset_catalog_to_glossary_terms(catalog)
             mapper.save_glossary_terms()
+
+            self._set_ok_response("text/html")
         except Exception as e:
-            print(f"An exception occurred: {e}")
+            self._set_error_response()
+            self.wfile.write(f"An error occurred: {e}".encode("utf-8"))
 
 
 def run(

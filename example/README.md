@@ -78,6 +78,70 @@ This will output something like this. Look for the value for "guid".
 
 In another shell:
 
+Fetch data catalog as RDF
 ```Shell
 % curl http://localhost:8081/catalog
+```
+
+Save data catalog as Glossary Terms to Apache Atlas. 
+
+The dataset identifier should be omitted when a dataset does not exist in Atlas. The mapper will generate an identifier.
+```Shell
+% curl -X POST -H "Content-Type: application/json" \
+    -d '{ 
+        "_type": "Catalog",
+        "access_rights_comments": [],
+        "catalogrecords": [
+            {
+                "_type": "CatalogRecord",
+                "conforms_to": [],
+                "identifier": "http://example.com/catalog-record/1"
+            }
+        ],
+        "conforms_to": [],
+        "datasets": [
+            {
+                "_type": "Dataset",
+                "access_rights_comments": [],
+                "conforms_to": [],
+                "distributions": [],
+                "frequency": "http://WEEKLY",
+                "is_referenced_by": [],
+                "landing_page": [],
+                "language": [],
+                "qualified_attributions": [],
+                "qualified_relation": [],
+                "resource_relation": [],
+                "theme": [],
+                "title": {"en": "Dataset 1", "nb": "Datasett 1"},
+                "description": {"en": "Dataset 1 description", "nb": "Datasett 1 beskrivelse"}
+            },
+            {
+                "_type": "Dataset",
+                "access_rights_comments": [],
+                "conforms_to": [],
+                "distributions": [],
+                "is_referenced_by": [],
+                "landing_page": [],
+                "language": [],
+                "qualified_attributions": [],
+                "qualified_relation": [],
+                "resource_relation": [],
+                "theme": [],
+                "title": {"en": "Dataset 2", "nb": "Datasett 2"},
+                "description": {"en": "Dataset 2 description", "nb": "Datasett 2 beskrivelse"}
+            }
+        ],
+        "description": {"en": "Description", "nb": "Beskrivelse"},
+        "identifier": "http://example.com/catalogs/1",
+        "is_referenced_by": [],
+        "landing_page": [],
+        "language": ["en", "nb"],
+        "qualified_attributions": [],
+        "qualified_relation": [],
+        "resource_relation": [],
+        "themes": [],
+        "title": {"en": "This catalog", "nb": "Denne katalogen"}
+    }' \
+    http://localhost:8081/catalog
 ```
