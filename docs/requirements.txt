@@ -1,3 +1,4 @@
 # docs/requirements.txt
 sphinx==5.0.1
 sphinx-autodoc-typehints==1.11.1
+myst_parser==0.18.1
