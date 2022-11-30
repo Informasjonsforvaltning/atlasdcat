@@ -58,7 +58,7 @@ mapper = AtlasDcatMapper(
 ```Python
 try:
     mapper.fetch_glossary()
-    catalog = mapper.map_glossary_to_dcat_dataset_catalog()
+    catalog = mapper.map_glossary_terms_to_dataset_catalog()
     print(catalog.to_rdf())
 except Exception as e:
     print(f"An exception occurred: {e}")
