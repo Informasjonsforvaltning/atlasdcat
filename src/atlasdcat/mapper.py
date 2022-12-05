@@ -54,6 +54,8 @@ Example:
         except Exception as e:
             print(f"An exception occurred: {e}")
 """
+import datetime as dt
+import time
 from typing import Any, Dict, List, Optional
 import uuid
 
@@ -187,8 +189,17 @@ def _map_period_of_time(start: str, end: str) -> PeriodOfTime:
         Period of time
     """
     period = PeriodOfTime()
-    period.start_date = start
-    period.end_date = end
+
+    if start.isnumeric():
+        period.start_date = _timestamp_to_date_string(float(start))
+    else:
+        period.start_date = start
+
+    if end.isnumeric():
+        period.end_date = _timestamp_to_date_string(float(end))
+    else:
+        period.end_date = end
+
     return period
 
 
@@ -219,6 +230,21 @@ def _generate_name(value: str) -> str:
         Name
     """
     return value.replace(" ", "").lower()
+
+
+def _timestamp_to_date_string(ts: float) -> str:
+    """Convert timestamp to date.
+
+    Args:
+        ts: Timestamp in seconds or milliseconds
+
+    Returns:
+        Date
+    """
+    if ts > time.time():
+        ts /= 1000.0
+
+    return dt.datetime.fromtimestamp(ts).strftime("%Y-%m-%d")
 
 
 class AtlasDcatMapper:
