@@ -49,8 +49,8 @@
   dc:publisher <https://organization-catalog.fellesdatakatalog.digdir.no/organizations/986252932> ;
   dc:temporal [
     a dc:PeriodOfTime ;
-    dcat:endDate "2022-10-10"^^xsd:date ;
-    dcat:startDate "2020-10-10"^^xsd:date
+    dcat:endDate "2022-12-05"^^xsd:date ;
+    dcat:startDate "2022-12-05"^^xsd:date
   ] ;
   dc:title "CPV-koder"@nb ;
   dcat:contactPoint [
