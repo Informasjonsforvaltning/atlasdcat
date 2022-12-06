@@ -116,7 +116,7 @@
                     "Oppdateringsfrekvens": "http://publications.europa.eu/resource/authority/frequency/IRREG | Uregelmessig",
                     "Tidsmessig avgrenset til": 0,
                     "Dataeier": "Contact X",
-                    "temporalStartDate": "1670203174",
+                    "temporalStartDate": "2022-12-05",
                     "temporalEndDate": "1670203174000"
                 }
             },
@@ -579,7 +579,9 @@
                     "Tidsmessig avgrenset fra": 0,
                     "Oppdateringsfrekvens": "http://publications.europa.eu/resource/authority/frequency/MONTHLY | Månedlig",
                     "Tidsmessig avgrenset til": 0,
-                    "Dataeier": "Contact X"
+                    "Dataeier": "Contact X",
+                    "temporalStartDate": 1670203174,
+                    "temporalEndDate": 0
                 }
             },
             "glossaryTermHeader": {

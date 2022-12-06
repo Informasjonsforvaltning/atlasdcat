@@ -191,12 +191,14 @@ def _map_period_of_time(start: str, end: str) -> PeriodOfTime:
     period = PeriodOfTime()
 
     if start.isnumeric():
-        period.start_date = _timestamp_to_date_string(float(start))
+        if start != "0":
+            period.start_date = _timestamp_to_date_string(float(start))
     else:
         period.start_date = start
 
     if end.isnumeric():
-        period.end_date = _timestamp_to_date_string(float(end))
+        if end != "0":
+            period.end_date = _timestamp_to_date_string(float(end))
     else:
         period.end_date = end
 

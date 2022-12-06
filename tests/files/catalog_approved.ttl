@@ -16,6 +16,10 @@
   dc:accrualPeriodicity <http://publications.europa.eu/resource/authority/frequency/MONTHLY> ;
   dc:description "Doffin er den nasjonale kunngjøringsdatabasen for offentlige anskaffelser Doffin hjelpe oppdragsgivere med å lage og publisere kunngjøringer i samsvar med regelverket, og gjøre det enkelt for leverandører å finne relevante konkurranser i offentlig sektor."@nb ;
   dc:publisher <https://organization-catalog.fellesdatakatalog.digdir.no/organizations/986252932> ;
+  dc:temporal [
+    a dc:PeriodOfTime ;
+    dcat:startDate "2022-12-05"^^xsd:date
+  ] ;
   dc:spatial <https://data.geonorge.no/administrativeEnheter/nasjon/id/173163> ;
   dc:title "Kunngjøringer av offentlig anskaffelser"@nb ;
   dcat:contactPoint [
