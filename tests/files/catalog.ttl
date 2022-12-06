@@ -67,11 +67,6 @@
   dc:description "Dataene består av utslipp (CO2-ekvivalenter) per krone fordelt på innkjøpsrelevante artskontoer i henhold til statsregnskapet. Dataene gir utslippsintensiteter fordelt på scope 1, 2 og 3, samt innland og utland."@nb ;
   dc:publisher <https://organization-catalog.fellesdatakatalog.digdir.no/organizations/986252932> ;
   dc:spatial <https://data.geonorge.no/administrativeEnheter/nasjon/id/173163> ;
-  dc:temporal [
-    a dc:PeriodOfTime ;
-    dcat:endDate "2022-10-10"^^xsd:date ;
-    dcat:startDate "2020-10-10"^^xsd:date
-  ] ;
   dc:title "Utslippsintensiteter"@nb ;
   dcat:contactPoint [
     a vcard:Organization ;

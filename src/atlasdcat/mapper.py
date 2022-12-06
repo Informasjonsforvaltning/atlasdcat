@@ -454,9 +454,9 @@ class AtlasDcatMapper:
                 value = type_attributes.get(self._get_attribute_name(attr))
                 if value is not None:
                     if parse_value and value is not None:
-                        return _parse_value(value)
+                        return _parse_value(str(value))
                     else:
-                        return [value]
+                        return [str(value)]
         else:
             attribute_name = "{prefix}_{name}".format(
                 prefix=self._get_attribute_name(type_attribute),
@@ -465,9 +465,9 @@ class AtlasDcatMapper:
             value = attributes.get(attribute_name)
             if value is not None:
                 if parse_value and value is not None:
-                    return _parse_value(value)
+                    return _parse_value(str(value))
                 else:
-                    return [value]
+                    return [str(value)]
 
         return []
 
@@ -622,7 +622,8 @@ class AtlasDcatMapper:
         end_date = self._get_first_attribute_value(
             term, TermType.DATASET, Attribute.TEMPORAL_END_DATE
         )
-        if start_date or end_date:
+
+        if (start_date and start_date != "0") or (end_date and end_date != "0"):
             try:
                 temporal = _map_period_of_time(start_date, end_date)
                 dataset.temporal = [temporal]

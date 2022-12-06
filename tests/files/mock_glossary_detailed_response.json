@@ -510,8 +510,8 @@
                     "Oppdateringsfrekvens": "http://publications.europa.eu/resource/authority/frequency/IRREG | Uregelmessig",
                     "Tidsmessig avgrenset til": 0,
                     "Dataeier": "Miss X",
-                    "temporalStartDate": "2020-10-10",
-                    "temporalEndDate": "2022-10-10"
+                    "temporalStartDate": 0,
+                    "temporalEndDate": 0
                 }
             },
             "glossaryTermHeader": {
