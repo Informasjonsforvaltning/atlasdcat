@@ -58,6 +58,7 @@ import datetime as dt
 import time
 from typing import Any, Dict, List, Optional
 import uuid
+from urllib.parse import urlparse
 
 from datacatalogtordf import (
     Catalog,
@@ -297,9 +298,15 @@ class AtlasDcatMapper:
         self._dataset_uri_template = dataset_uri_template
         self._distribution_uri_template = distribution_uri_template
         self._attr_mapping = attr_mapping if attr_mapping is not None else {}
+
+        parsed_endpoint = urlparse(glossary_client.endpoint_url)
+        host = parsed_endpoint.hostname or ""
+        purview_detected = host == "purview.azure.com" or host.endswith(".purview.azure.com")
+
         self._is_purview = (
-            is_purview is None and "purview.azure.com" in glossary_client.endpoint_url
-        ) or (is_purview is not None and is_purview)
+            (is_purview is None and purview_detected)
+            or (is_purview is not None and is_purview)
+        )
         self._include_approved_only = include_approved_only and is_purview
         self._glossary: Optional[Dict] = None
         self._tmp_glossary_terms: List = []
