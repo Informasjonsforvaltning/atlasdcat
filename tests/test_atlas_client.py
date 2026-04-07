@@ -1,4 +1,5 @@
 """Test cases for the mapper module."""
+
 import json
 from typing import Any
 

@@ -54,6 +54,7 @@ Example:
         except Exception as e:
             print(f"An exception occurred: {e}")
 """
+
 import datetime as dt
 import time
 from typing import Any, Dict, List, Optional
@@ -393,7 +394,7 @@ class AtlasDcatMapper:
                 if self._get_attribute_name(Attribute.DISTRIBUTION) in attributes:
                     return TermType.DISTRIBUTION
             else:
-                for (name, _) in attributes.items():
+                for name, _ in attributes.items():
                     if name.startswith(
                         self._get_attribute_name(Attribute.DATASET) + "_"
                     ):
@@ -778,89 +779,111 @@ class AtlasDcatMapper:
             dataset_term,
             TermType.DATASET,
             Attribute.PUBLISHER,
-            _format_value([[dataset.publisher, ""]])
-            if hasattr(dataset, "publisher")
-            else "",
+            (
+                _format_value([[dataset.publisher, ""]])
+                if hasattr(dataset, "publisher")
+                else ""
+            ),
         )
         self._set_attribute_values(
             dataset_term,
             TermType.DATASET,
             Attribute.FREQUENCY,
-            _format_value([[dataset.frequency, ""]])
-            if hasattr(dataset, "frequency")
-            else "",
+            (
+                _format_value([[dataset.frequency, ""]])
+                if hasattr(dataset, "frequency")
+                else ""
+            ),
         )
         self._set_attribute_values(
             dataset_term,
             TermType.DATASET,
             Attribute.ACCESS_RIGHTS,
-            _format_value([[dataset.access_rights, ""]])
-            if hasattr(dataset, "access_rights")
-            else "",
+            (
+                _format_value([[dataset.access_rights, ""]])
+                if hasattr(dataset, "access_rights")
+                else ""
+            ),
         )
         self._set_attribute_values(
             dataset_term,
             TermType.DATASET,
             Attribute.THEME,
-            _format_value([[item, ""] for item in dataset.theme])
-            if hasattr(dataset, "theme")
-            else "",
+            (
+                _format_value([[item, ""] for item in dataset.theme])
+                if hasattr(dataset, "theme")
+                else ""
+            ),
         )
         self._set_attribute_values(
             dataset_term,
             TermType.DATASET,
             Attribute.KEYWORD,
-            _format_value([[item] for item in dataset.keyword.get(self._language)])
-            if hasattr(dataset, "keyword")
-            else "",
+            (
+                _format_value([[item] for item in dataset.keyword.get(self._language)])
+                if hasattr(dataset, "keyword")
+                else ""
+            ),
         )
         self._set_attribute_values(
             dataset_term,
             TermType.DATASET,
             Attribute.SPATIAL,
-            _format_value([[item.identifier, ""] for item in dataset.spatial])
-            if hasattr(dataset, "spatial")
-            else "",
+            (
+                _format_value([[item.identifier, ""] for item in dataset.spatial])
+                if hasattr(dataset, "spatial")
+                else ""
+            ),
         )
         self._set_attribute_values(
             dataset_term,
             TermType.DATASET,
             Attribute.SPATIAL_RESOLUTION_IN_METERS,
-            _format_value([[item] for item in dataset.spatial_resolution_in_meters])
-            if hasattr(dataset, "spatial_resolution_in_meters")
-            else "",
+            (
+                _format_value([[item] for item in dataset.spatial_resolution_in_meters])
+                if hasattr(dataset, "spatial_resolution_in_meters")
+                else ""
+            ),
         )
         self._set_attribute_values(
             dataset_term,
             TermType.DATASET,
             Attribute.TEMPORAL_START_DATE,
-            dataset.temporal[0].start_date
-            if hasattr(dataset, "temporal") and len(dataset.temporal) > 0
-            else "",
+            (
+                dataset.temporal[0].start_date
+                if hasattr(dataset, "temporal") and len(dataset.temporal) > 0
+                else ""
+            ),
         )
         self._set_attribute_values(
             dataset_term,
             TermType.DATASET,
             Attribute.TEMPORAL_END_DATE,
-            dataset.temporal[0].end_date
-            if hasattr(dataset, "temporal") and len(dataset.temporal) > 0
-            else "",
+            (
+                dataset.temporal[0].end_date
+                if hasattr(dataset, "temporal") and len(dataset.temporal) > 0
+                else ""
+            ),
         )
         self._set_attribute_values(
             dataset_term,
             TermType.DATASET,
             Attribute.SPATIAL_RESOLUTION_IN_METERS,
-            _format_value([[item] for item in dataset.temporal_resolution])
-            if hasattr(dataset, "temporal_resolution")
-            else "",
+            (
+                _format_value([[item] for item in dataset.temporal_resolution])
+                if hasattr(dataset, "temporal_resolution")
+                else ""
+            ),
         )
         self._set_attribute_values(
             dataset_term,
             TermType.DATASET,
             Attribute.CONTACT_NAME,
-            dataset.contactpoint.name[self._language]
-            if hasattr(dataset, "contactpoint")
-            else "",
+            (
+                dataset.contactpoint.name[self._language]
+                if hasattr(dataset, "contactpoint")
+                else ""
+            ),
         )
         self._set_attribute_values(
             dataset_term,
@@ -872,9 +895,11 @@ class AtlasDcatMapper:
             dataset_term,
             TermType.DATASET,
             Attribute.LICENSE,
-            _format_value([[dataset.license, ""]])
-            if hasattr(dataset, "license")
-            else "",
+            (
+                _format_value([[dataset.license, ""]])
+                if hasattr(dataset, "license")
+                else ""
+            ),
         )
 
         terms.append(dataset_term)
@@ -936,7 +961,12 @@ class AtlasDcatMapper:
 
         if hasattr(distribution, "identifier"):
             guid = _extract_guid(self._dataset_uri_template, distribution.identifier)
-            distribution_term = self._get_persisted_term(guid)
+            persisted_term = self._get_persisted_term(guid)
+            if persisted_term is None:
+                raise MappingError(
+                    "Distribution identifier does not match an existing glossary term."
+                )
+            distribution_term = persisted_term
 
         distribution_term["longDescription"] = distribution.description.get(
             self._language
@@ -960,33 +990,41 @@ class AtlasDcatMapper:
             distribution_term,
             TermType.DISTRIBUTION,
             Attribute.ACCESS_URL,
-            _format_value([[distribution.access_URL, ""]])
-            if hasattr(distribution, "access_URL")
-            else "",
+            (
+                _format_value([[distribution.access_URL, ""]])
+                if hasattr(distribution, "access_URL")
+                else ""
+            ),
         )
         self._set_attribute_values(
             distribution_term,
             TermType.DISTRIBUTION,
             Attribute.DOWNLOAD_URL,
-            _format_value([[distribution.download_URL, ""]])
-            if hasattr(distribution, "download_URL")
-            else "",
+            (
+                _format_value([[distribution.download_URL, ""]])
+                if hasattr(distribution, "download_URL")
+                else ""
+            ),
         )
         self._set_attribute_values(
             distribution_term,
             TermType.DISTRIBUTION,
             Attribute.LICENSE,
-            _format_value([[distribution.license, ""]])
-            if hasattr(distribution, "license")
-            else "",
+            (
+                _format_value([[distribution.license, ""]])
+                if hasattr(distribution, "license")
+                else ""
+            ),
         )
         self._set_attribute_values(
             distribution_term,
             TermType.DISTRIBUTION,
             Attribute.TEMPORAL_RESOLUTION,
-            _format_value([[item] for item in distribution.temporal_resolution])
-            if hasattr(distribution, "temporal_resolution")
-            else "",
+            (
+                _format_value([[item] for item in distribution.temporal_resolution])
+                if hasattr(distribution, "temporal_resolution")
+                else ""
+            ),
         )
 
         return distribution_term
