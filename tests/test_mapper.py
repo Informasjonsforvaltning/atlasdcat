@@ -1,4 +1,5 @@
 """Test cases for the mapper module."""
+
 import json
 from typing import Any
 
@@ -1239,22 +1240,19 @@ def test_validation_and_invalid_identifier(responses: Any) -> None:
     )
 
     mapper.fetch_glossary()
-    with pytest.raises(MappingError):
-        dataset = Dataset(identifier="unknown")
-        mapper._map_dataset_to_terms(dataset)
 
-    with pytest.raises(MappingError):
+    def _map_unknown_dataset_with_title() -> None:
         dataset = Dataset(identifier="unknown")
         dataset.title = {"nb": "Unknown dataset"}
         mapper._map_dataset_to_terms(dataset)
 
-    with pytest.raises(MappingError):
+    def _map_unknown_dataset_with_title_and_description() -> None:
         dataset = Dataset(identifier="unknown")
         dataset.title = {"nb": "Unknown dataset"}
         dataset.description = {"nb": "Unknown dataset"}
         mapper._map_dataset_to_terms(dataset)
 
-    with pytest.raises(MappingError):
+    def _map_known_dataset_with_invalid_keyword_lang() -> None:
         dataset = Dataset(
             identifier="http://data.norge.no/datasets/b87714c2-31a7-4249-8b94-fa5990eae45c"
         )
@@ -1263,23 +1261,56 @@ def test_validation_and_invalid_identifier(responses: Any) -> None:
         dataset.keyword = {"en": ["Known dataset"]}
         mapper._map_dataset_to_terms(dataset)
 
-    with pytest.raises(MappingError):
-        distribution = Distribution(
-            identifier="http://data.norge.no/datasets/b87714c2-31a7-4249-8b94-fa5990eae45c"
+    def _map_distribution_missing_title_and_description() -> None:
+        mapper._map_distribution_to_term(
+            Distribution(
+                identifier="http://data.norge.no/datasets/b87714c2-31a7-4249-8b94-fa5990eae45c"
+            )
         )
-        mapper._map_distribution_to_term(distribution)
 
-    with pytest.raises(MappingError):
+    def _map_distribution_missing_description() -> None:
         distribution = Distribution(
             identifier="http://data.norge.no/datasets/b87714c2-31a7-4249-8b94-fa5990eae45c"
         )
         distribution.title = {"nb": "Known dataset"}
         mapper._map_distribution_to_term(distribution)
 
-    with pytest.raises(MappingError):
+    def _map_unknown_distribution_identifier() -> None:
+        distribution = Distribution(
+            identifier="http://data.norge.no/datasets/00000000-0000-0000-0000-000000000000"
+        )
+        distribution.title = {"nb": "Unknown distribution"}
+        distribution.description = {"nb": "Unknown distribution"}
+        mapper._map_distribution_to_term(distribution)
+
+    def _map_catalog_with_invalid_language() -> None:
         catalog = Catalog()
         catalog.language = "http://invalid-language"
         mapper.map_dataset_catalog_to_glossary_terms(catalog)
+
+    with pytest.raises(MappingError):
+        mapper._map_dataset_to_terms(Dataset(identifier="unknown"))
+
+    with pytest.raises(MappingError):
+        _map_unknown_dataset_with_title()
+
+    with pytest.raises(MappingError):
+        _map_unknown_dataset_with_title_and_description()
+
+    with pytest.raises(MappingError):
+        _map_known_dataset_with_invalid_keyword_lang()
+
+    with pytest.raises(MappingError):
+        _map_distribution_missing_title_and_description()
+
+    with pytest.raises(MappingError):
+        _map_distribution_missing_description()
+
+    with pytest.raises(MappingError):
+        _map_unknown_distribution_identifier()
+
+    with pytest.raises(MappingError):
+        _map_catalog_with_invalid_language()
 
     dataset = Dataset(
         identifier="http://data.norge.no/datasets/b87714c2-31a7-4249-8b94-fa5990eae45c"

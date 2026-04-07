@@ -1,4 +1,5 @@
 """AtlasClient module for mapping an Atlas Glossery to DCAT rdf."""
+
 from typing import Dict, Union
 
 from pyapacheatlas.auth import ServicePrincipalAuthentication
@@ -54,6 +55,7 @@ class AtlasGlossaryClient(GlossaryClient):
             json=payload,
             params=kwargs.get("parameters", {}),
             headers=self.authentication.get_authentication_headers(),
+            timeout=30,
             **self._requests_args,
         )
 
